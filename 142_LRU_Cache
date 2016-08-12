@@ -1,1 +1,90 @@
+/**use Node to control the connection, 
+ * use HashMap<Integer, Node> to maintain the least recently used table
+ * get()-> HashMap could be the control and update node as head. 
+ * set()-> need to check capacity and add the node as head, 
+ *          if it is over capacity, remove the tail
+ * so need two extra function addNodetoHead() and removeNode()
+ * removeNode() {node.pre == null? ; node.next == null? ;}
+**/
 
+
+public class LRUCache {
+    public Map<Integer, LRUNode> map = new HashMap<>();
+    public LRUNode head =null, tail = null;
+    public int capacity =0;
+    
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+    }
+    
+    public void addtoHead(LRUNode node){
+        node.next = head;
+        node.pre = null;
+        if(head != null){
+            head.pre = node;
+        }
+        head = node;
+        if(tail == null){
+            tail = head;
+        }
+    }
+    public void removeNode(LRUNode node){
+        if(node.pre == null){
+            head = node.next;
+        }else{
+            node.pre.next = node.next;
+        }
+        if(node.next == null){
+            tail = node.pre;
+        }else{
+            node.next.pre = node.pre;
+        }
+    }
+    
+    public int get(int key) {
+        int value = -1;
+        if(map.containsKey(key)){
+            LRUNode tempNode = map.get(key);
+            value = tempNode.value;
+            removeNode(tempNode);
+            addtoHead(tempNode);
+        }
+        
+        return value;
+        
+    }
+    
+    public void set(int key, int value) {
+        if(map.containsKey(key)){
+            LRUNode tempNode = map.get(key);
+            tempNode.value = value;
+            map.put(key, tempNode);
+            //remove node before add, otherwise it will get redudance
+            removeNode(tempNode);
+            addtoHead(tempNode);
+        }else{
+            if(map.size() >= capacity){
+                //remove from map first and then remove the node, otherwise map got nothing to remove!
+                map.remove(tail.key);
+                removeNode(tail);
+            }
+            
+            LRUNode tempNode = new LRUNode(key, value);
+            map.put(key, tempNode);
+            addtoHead(tempNode);
+        }
+    }
+}
+
+
+
+class LRUNode{
+    int key;
+    int value;
+    LRUNode pre;
+    LRUNode next;
+    LRUNode(int key, int value){
+        this.key = key;
+        this.value = value;
+    }
+}
