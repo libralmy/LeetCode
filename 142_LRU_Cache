@@ -26,7 +26,6 @@ For our solution one, we intensively use remove operation for set() and get() op
 Can we solve this bottle neck? Yes, use doubly linked list to implement our own queue. In doubly linkedlist:
 1. remove(e), O(1)
 1. add(e), O(1)
-That's exactly what we want right?
 **/
 
 public class LRUCache {
