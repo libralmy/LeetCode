@@ -1,6 +1,7 @@
     /**use stack to be the temp storage
      * all charactor should show up as a pair
-     * so the first come, next should be the other one**/
+     * so the first come, next should be the other one
+     * OR using do{s.replace() all the "()", "[]", "{}"}while(s.length != 0)**/
 public class Solution {
     public boolean isValid(String s) {
         Stack<Character> stack = new Stack<>();
