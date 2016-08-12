@@ -6,7 +6,28 @@
  * so need two extra function addNodetoHead() and removeNode()
  * removeNode() {node.pre == null? ; node.next == null? ;}
 **/
+/**
+The reason of causing the time limit problem is the queue implementation in Java (whether in ArrayList or LinkedList). The operations for a long queue are quite expensive. 
+1. ArrayList
+size(): O(1) there is a constant
+get(index): O(1)
+add(e): O(1)
+remove(index): O(n)
+remove(e): O(n)
 
+2. LinkedList
+size(); O(1) there is a constant
+get(index): O(n)
+add(e): O(1)
+remove(index): O(n)
+remove(e): O(n) (find the element, singly linked list)
+
+For our solution one, we intensively use remove operation for set() and get() operation. the time cost is really really big!!!!
+Can we solve this bottle neck? Yes, use doubly linked list to implement our own queue. In doubly linkedlist:
+1. remove(e), O(1)
+1. add(e), O(1)
+That's exactly what we want right?
+**/
 
 public class LRUCache {
     public Map<Integer, LRUNode> map = new HashMap<>();
