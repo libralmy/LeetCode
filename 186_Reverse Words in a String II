@@ -1,0 +1,32 @@
+/**
+*swap() from 0 to s.length()-1 => reverse whole senetence
+*for() if meet space, then reverse the word(start, i-1), then sart = i+1
+*for() will stop at last space, so it wont reach the last word, swap(start, lenght-1)=> swap the last word and avoid the conner case**/
+public class Solution {
+    public static void reverseWords(char[] s) {
+        //1 reverse whole sentence
+        swap(s, 0 , s.length-1);
+        int start  = 0;
+        
+        //2 reverse each word
+        for(int i = 0; i<s.length; i++){
+            //will split by ' '
+            if(s[i] == ' '){
+                swap(s, start, i-1);
+                start = i+1;
+            }
+            
+        }
+        //forloop will stop at the last space, so it wont reach the last word.
+        //reverse the last word, if it only has one word, it still solve the conner case
+        swap(s, start, s.length-1);
+    }
+    public static void swap(char[] s, int start, int end){
+        while(start<end){
+            char temp = s[start];
+            s[start++] = s[end];
+            s[end--] = temp;
+
+        }
+    }
+}
