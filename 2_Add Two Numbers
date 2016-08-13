@@ -1,0 +1,57 @@
+/**
+     * use dummy head as the start to avoid to initalize the head node value
+     * Initialize p and q to head of l1 and l2 respectively, and initialize head and node to null, then set to (0).
+     * use carry to hold the overflow from previous sum
+     * use remainder % to set the node.next
+     * and move pointer to next=> node = node.next
+     * check current two node is null or not, if not then set to next
+     * return head.next**/
+
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int carry = 0, sum = 0, remainder = 0;
+        ListNode dummyhead = new ListNode(0);
+        ListNode p = l1, q = l2 , node = dummyhead;
+
+        while(p !=null || q != null || carry !=0){
+            sum = (p != null? p.val : 0) + (q !=null? q.val : 0) + carry;
+            carry = sum/10;
+            remainder = sum%10;
+            node.next = new ListNode(remainder);
+            node = node.next;
+
+            p = (p != null ? p.next: null);
+            q = (q != null ? q.next : null);
+
+        }
+        return dummyhead.next;
+
+    }
+
+    /*
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        return helper(l1,l2,0);
+    }
+    private ListNode helper(ListNode l1, ListNode l2, int carry){
+        if(l1 == null && l2 == null){
+            if(carry == 1)  return new ListNode(1);
+            else    return null;
+        }
+        
+        int sum = carry;
+        sum = (l1 == null)?sum:sum+l1.val;
+        sum = (l2 == null)?sum:sum+l2.val;
+        
+        carry = sum / 10;
+        sum = sum % 10;
+        
+        ListNode node = new ListNode(sum);
+        if(l1 == null)  
+            node.next = helper(l1,l2.next,carry);
+        else if(l2 == null)
+            node.next = helper(l1.next,l2,carry);
+        else
+            node.next = helper(l1.next,l2.next,carry);
+        return node;
+        
+    }
+    */
