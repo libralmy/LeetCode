@@ -1,0 +1,34 @@
+/***
+ * two pointer: slow and fast, use slow to find the mid when fast reach the tail
+ * if the length of list is odd, fast will NOT be null, then slow need to switch to next
+ * reverse slow and compare with head while(slow !=null && slow.val == head.val) parallal next
+ * return slow == null
+ * */
+    public static boolean isPalindrome(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        //make sure next.next will not throw exception
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        if(fast != null) slow = slow.next;//length is even
+        slow = reverse(slow);
+
+        while(slow != null && slow.val == head.val){
+            head = head.next;
+            slow = slow.next;
+        }
+        return slow == null;
+    }
+
+    private static ListNode reverse(ListNode node){
+        ListNode prev = null;
+        while(node != null){
+            ListNode temp = node.next;
+            node.next = prev;
+            prev = node;
+            node = temp;
+        }
+        return prev;
+    }
