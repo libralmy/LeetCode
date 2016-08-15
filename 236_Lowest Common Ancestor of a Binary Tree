@@ -1,0 +1,54 @@
+
+/**depends on which side will return the non value, if both of them return non vale, then root is the LCA**/
+
+public class Solution {
+    public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        /*****************Divide conquer************************/
+        if(root == null || p == root || q == root){return root;}
+        //divide
+        TreeNode leftNode = lowestCommonAncestor(root.left, p, q);
+        TreeNode rightNode = lowestCommonAncestor(root.right, p, q);
+        //conquer
+        if(leftNode != null && rightNode != null){
+            return root;
+        }else if(leftNode !=null){
+            return leftNode;
+        }else{
+            return rightNode;
+        }
+        
+        
+        /* iterate solution
+        Map<TreeNode, TreeNode> parentNode = new HashMap<>();
+        Queue<TreeNode> iterateNode = new LinkedList<>();
+
+        parentNode.put(root,null);
+        iterateNode.add(root);
+        while(!parentNode.containsKey(p)|| !parentNode.containsKey(q)){
+            TreeNode tempParent = iterateNode.poll();
+            if(tempParent!=null){
+                parentNode.put(tempParent.left, tempParent);
+                parentNode.put(tempParent.right, tempParent);
+                iterateNode.add(tempParent.left);
+                iterateNode.add(tempParent.right);
+            }
+        }
+
+        Set<TreeNode> setParent = new HashSet<>();
+        // node p
+        while(p!=null){
+            setParent.add(p);
+            p = parentNode.get(p);
+
+        }
+
+        //node q and find ca
+        while(!setParent.contains(q)){
+            q = parentNode.get(q);
+        }
+
+        return q;
+*/
+    }
+    
+}
