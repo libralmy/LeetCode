@@ -1,0 +1,79 @@
+    /**
+     * using dfs to check matrix array, 
+     * Solution 1: using visited boolean array, if not visited and grid =='1',run dfs, and count ++, check the bondary
+     * Solution 2: modifying exsited array with '#' if visited **/
+     
+     public class Solution {
+    /*
+    public static int numIslands(char[][] grid) {
+        if(grid.length == 0 || grid[0].length ==0 || grid == null){return 0;}
+
+
+        boolean[][] visit = new boolean[grid.length][grid[0].length];
+
+        int count = 0 ;
+        for(int i = 0; i<grid.length ; i++){
+            for(int j = 0; j<grid[0].length; j++){
+                if(!visit[i][j] && grid[i][j] == '1'){
+                    dfs(grid,visit, i, j);
+                    count++;
+
+                }
+            }
+
+        }
+        return count;
+
+    }
+
+    public static void dfs(char[][] grid, boolean[][] visit, int i, int j){
+        if(i>= 0 && i< grid.length && j>= 0 && j< grid[0].length &&!visit[i][j]  && grid[i][j] =='1'){
+            visit[i][j] = true;
+            //up
+            dfs(grid, visit, i-1, j);
+            //right
+            dfs(grid,visit,  i, j+1);
+            //down
+            dfs(grid,visit, i+1, j);
+            //left
+            dfs(grid,visit, i, j-1);
+
+        }
+    }
+    */
+        public static int numIslands(char[][] grid) {
+        if(grid.length == 0 || grid[0].length ==0 || grid == null){return 0;}
+
+
+       // boolean[][] visit = new boolean[grid.length][grid[0].length];
+
+        int count = 0 ;
+        for(int i = 0; i<grid.length ; i++){
+            for(int j = 0; j<grid[0].length; j++){
+                if(grid[i][j] == '1'){
+                    dfs(grid,i, j);
+                    count++;
+
+                }
+            }
+
+        }
+        return count;
+
+    }
+
+    public static void dfs(char[][] grid,int i, int j){
+        if(i>= 0 && i< grid.length && j>= 0 && j< grid[0].length && grid[i][j] =='1'){
+            grid[i][j] = '#';
+            //up
+            dfs(grid, i-1, j);
+            //right
+            dfs(grid, i, j+1);
+            //down
+            dfs(grid, i+1, j);
+            //left
+            dfs(grid, i, j-1);
+
+        }
+    }
+}
