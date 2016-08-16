@@ -1,6 +1,6 @@
     /**
      * S1: sorted array and get last kth elem(length - k)
-     * S2: using setup PriorityQueue(inner sorted) length = k+1; iterate nums[] for adding elem, pop the k+1th largest or smaller elem**/
+     * S2: using setup PriorityQueue(inner decsending sorted) length = k+1; iterate nums[] for adding elem, pop the k+1th largest or smaller elem**/
     public static int findKthLargest(int[] nums, int k) {
 //        if(nums.length == 0 ){ return 0;}
 //        int kl = nums[0];
