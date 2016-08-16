@@ -6,7 +6,12 @@ pop:    如果 pop 的值比目前最小值大，仅 remove 出 stack 中的值
         如果 pop 的值即为目前的最小值，同时 remove 出 stack 和 minstack
 top:    返回 stack 顶部的值
 getMin: 返回 minStack 顶部的值
-
+O(1) runtime, O(n) space – Extra stack:
+/*
+Use an extra stack to keep track of the current minimum value. 
+During the push operation we choose the new element or the current minimum, 
+whichever that is smaller to push onto the min stack.
+*/
 public class MinStack {
     //注意：做任何操作前，都思考一下 stack / minStack 为空的状况
     /*****************ArrayList**********************/
