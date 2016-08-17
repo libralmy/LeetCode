@@ -1,0 +1,28 @@
+/***
+a1, a2, c1, c2, c3, b1, b2, b3,   c1, c2, c3
+b1, b2, b3, c1, c2, c3, a1, a2,   c1, c2, c3
+O(lenA + lenB)
+two new listNode = headA and headB
+after they run out, add each other and continue until reach the common parts***/
+
+
+    public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA == null || headB == null){return null;}
+
+        ListNode a = headA;
+        ListNode b = headB;
+        while(a != b){
+            if(a == null){
+                a = headB;
+            }else{
+                a = a.next;
+            }
+            if(b == null){
+                b = headA;
+            }else{
+                b = b.next;
+            }
+        }
+        return a;
+
+    }
