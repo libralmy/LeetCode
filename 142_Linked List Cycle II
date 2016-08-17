@@ -1,0 +1,31 @@
+/**
+this is using linked list cycle idea to verify fast and slow can meet? then it has cycle
+after they meet, then while(slow != entry) entry starts from head, so slow = slow.next, entry = entry.next 
+get the entry node***/
+
+head____________entry___meet__)
+      L1             L2        C
+PathSlow = L1 + L2;
+PathFast = L1 + L2 + n*C;
+PathSlow *2 = PathFast;
+L1 = n*C -L2;
+
+public static ListNode detectCycle(ListNode head) {
+  if(head == null || head.next == null){return null;}
+  ListNode slow = head, fast = head, entry = head;
+  while(fast != null && fast.next !=null){
+    fast = fast.next.next;
+    slow = slow.next;
+    if(slow == fast){
+      while(slow != entry){
+        slow = slow.next;
+        entry = entry.next;
+        
+      }
+      return entry;
+    }
+  }
+  return null;
+
+
+}
