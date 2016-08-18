@@ -1,0 +1,26 @@
+    /***
+    t2
+    1*2, 2*2, 3*2, 4*2
+    t3
+    1*3, 2*3, 3*3, 4*3
+    t5
+    1*5, 2*5, 3*5, 4*5
+    ugly[] = min(ugly[t2]*2, ugly[t3]*3, ugly[t5]*5)
+    if(ugly[]%2 == 0) means t2 pointer will move forward,same as rest
+    ***/
+    public int nthUglyNumber(int n) {
+        int[] ugly = new int[n];
+        ugly[0] = 1;//Note that 1 is typically treated as an ugly number.
+        int t2 =0, t3 = 0, t5 = 0;
+        for(int i = 1; i<n ; i++){
+            ugly[i] = Math.min(ugly[t2]*2, Math.min(ugly[t3]*3, ugly[t5]*5));
+            if(ugly[i]%2 == 0) t2++;
+            if(ugly[i]%3 == 0) t3++;
+            if(ugly[i]%5 == 0) t5++;
+        }
+        
+        
+        
+        return ugly[n-1];
+        
+    }
