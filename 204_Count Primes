@@ -1,0 +1,47 @@
+    /**S1:
+     * 0, 1 are not prime, so conner case return
+     * 2 is prime,count =1, flag = true;
+     * for starts from 3, i+=2
+     * inner for starts from 3, j+=2, i%j == 0 then not a prime=>break
+     * according to flag, count++
+     *
+     *
+     * S2:
+     * define a boolean array for get all products
+     * for i = 2, i<n
+     * if !arr[i] = > count++;
+     *      for j= 2; i*j <=n
+     *          arr[i*j] = true;**/
+    public static int countPrimes(int n) {
+        int count = 0;
+        boolean[] isPrime = new boolean[n];//smaller than , so doesnt need to =
+        for(int i = 2; i< n ; i++){
+            if(!isPrime[i]){
+                count++;
+                for(int j = 2; i*j <= n ; j++){
+                    isPrime[i*j] = true;
+                }
+            }
+
+        }
+        return count;
+/*
+        if(n < 2) return 0;
+        if(n == 2) return 1;
+
+        int count = 1;
+        for(int i = 3 ; i<n ; i+=2){
+            boolean flag = true;
+            for(int j = 3; j*j<=i ; j+=2){
+                if(i%j == 0){
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag)count++;
+        }
+        return count;
+*/
+
+
+    }
