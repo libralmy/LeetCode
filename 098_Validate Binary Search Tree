@@ -1,0 +1,46 @@
+/**S1: Iteration O(logn)
+ * use statck to do the in order traversal left, root, right
+ * curr is the pointer
+ * pre =null pre< root
+ * while(stack not empty and curr !=null)
+ * curr != null => push to stack and curr = curr.left
+ * else pop =>compare pre < pop =>pre = pop, curr = pop.right **/
+ public class Solution {
+    
+    public static boolean isValidBST(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        TreeNode pre = null;
+        while(!stack.isEmpty() || curr != null){
+            if(curr != null){
+                stack.push(curr);
+                curr = curr.left; //leftbound first
+            }else{
+                TreeNode temp = stack.pop();
+                //temp is the parent of pre
+                if(pre !=null && temp.val <= pre.val){
+                    return false;
+                }
+                pre = temp;
+                curr = temp.right;
+            }
+        }
+
+        return true;
+    }
+    /*
+    public boolean isValidBST(TreeNode root) {
+        return isValidBSTHelper(root, null, null);
+    }
+
+    private boolean isValidBSTHelper(TreeNode root, Integer leftBound, Integer rightBound) {
+        // recursively pass left and right bounds from higher level to lower level
+        if (root == null) {
+            return true;
+        }
+        if (leftBound != null && root.val <= leftBound || rightBound != null && root.val >= rightBound) {
+            return false;
+        }
+        return isValidBSTHelper(root.left, leftBound, root.val) && isValidBSTHelper(root.right, root.val, rightBound);
+    }*/
+}
