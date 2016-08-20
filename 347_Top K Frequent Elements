@@ -1,0 +1,39 @@
+/**
+use hashmap to record <num[i], frequence>
+use PriorityQueue(<Map.Entry<Integer, Integer>>) to addAll(hashmap.entrySet()) compared hashmap
+lambda(e1, e2)->e2.getValue() - e1.getValue()
+use for to get first k from PriorityQueue.poll().getKey()
+The total time complexity I think should be O(N+k+(N-k)lgk), 
+where N is the time spent on traversing over the map, 
+k is the time to build heap, 
+and (N-k)lgk is the time to insert the remaining (N-k) elements.
+**/
+
+public class Solution {
+    public List<Integer> topKFrequent(int[] nums, int k) {
+        List<Integer> result = new ArrayList<>();
+        if(nums == null) return result;
+        Map<Integer, Integer> maptopK = new HashMap<>();
+//        PriorityQueue<maptopK.Entry<Integer, Integer>> pque = new PriorityQueue<maptopK.Entry<Integer, Integer>>(
+//            new Comparator<maptopK.Entry<Integer, Integer>>(){
+//                public int compare(maptopK.Entry<Integer, Integer> e1, maptopK.Entry<Integer, Integer> e2){
+//                    return e1.getValue() - e2.getValue();
+//                }
+//            }
+//        );
+        PriorityQueue<Map.Entry<Integer, Integer>> pqueue =
+                new PriorityQueue<>((e1,e2)-> e2.getValue() - e1.getValue()); //lambda expressions introduced in Java8
+        for(int n : nums){
+            if(maptopK.containsKey(n)){
+                maptopK.put(n,maptopK.get(n)+1);
+            }else{
+                maptopK.put(n,0);
+            }
+        }
+        pqueue.addAll(maptopK.entrySet());
+        for(int i = 0; i<k ; i++){
+            result.add(pqueue.poll().getKey());
+        }
+        return result;
+    }
+}
