@@ -1,0 +1,38 @@
+    /****anagram the order of chars are been changed
+     * letterMap[s.charAt(i) - 'a']++****/
+
+    /***
+     * use int[] letterMap[26] to count all the exsited char of s
+     * iterate t to deduct all exsited char of t
+     * for loop if get count is not 0**/
+    public static boolean isAnagram(String s, String t) {
+        /*
+        if(s == "" && t == ""){
+            return true;
+        }else if((s != "" && t == "") || (s == "" && t != "")){
+            return false;
+        }
+
+        char[] stoArr = s.toCharArray();
+        char[] ttoArr = t.toCharArray();
+        Arrays.sort(stoArr);
+        Arrays.sort(ttoArr);
+        if(String.valueOf(stoArr).equals(String.valueOf(ttoArr)))return true;
+
+        return false;
+
+        */
+        int[] letterMap = new int[26];//lower case
+        for(char c : s.toCharArray()){
+            letterMap[c - 'a']++;
+        }
+        for(char c : t.toCharArray()){
+            letterMap[c - 'a']--;
+        }
+        for(int n : letterMap){
+            if(n != 0) return false;
+        }
+        return true;
+
+
+    }
