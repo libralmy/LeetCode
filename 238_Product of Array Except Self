@@ -1,0 +1,29 @@
+    /***
+     * {1,2,3,4} =>{2*3*4, 1*3*4, 1*2*4, 1*2*3}
+     * ltor{1,1,2,6}, rtol{24,12,4,1}
+     * two array ltor[i] all the right side product before itself
+     * rtol[i] all the left side product after itself
+     * result[i] = ltor * rtol => left side of product * right side of product
+     * merge the last for right -> left loop *****/
+    public static int[] productExceptSelf(int[] nums) {
+        int[] ltor = new int[nums.length];
+        int[] rtol = new int[nums.length];
+
+        if(nums == null){return rtol;}
+        for(int i = 0, temp =1; i<nums.length ; i++){
+            ltor[i] = temp;
+            temp *= nums[i];
+        }
+
+        for(int i = nums.length-1, temp =1; i>=0 ; i--){
+            ltor[i] *= temp;
+            temp *= nums[i];
+        }
+//        for(int i = nums.length-1 ; i>=0 ; i--){
+//            rtol[i] *=ltor[i];
+//        }
+
+
+        return ltor;
+
+    }
