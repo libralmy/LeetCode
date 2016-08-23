@@ -2,16 +2,17 @@
 /**use two pointer for the sorted array
  * Arrays.copyof(arr, arr.length)
  * Arrays.sorted(arr2)
- * get the two value 
+ * get the two value if found it dont forget to break the while/for loop
+ * if(a == b) result[0] = i; for(int k = i+1; k++) search b starts from i+1
  * check them in the original array**/
  
  
  /********S2***********/
-/**use HashMap<> to check map.get(arr(i))
- * Arrays.copyof(arr, arr.length)
- * Arrays.sorted(arr2)
- * get the two value 
- * check them in the original array**/
+/**use map<num[i], i>
+     * if(map.containsKey(target - nums[i])) result0 = map.get return result
+     * map.put(nums[i], i)
+     */
+ 
 public static int[] twoSum(int[] nums, int target) {
         int[] result = new int[2];
         Map<Integer, Integer> map = new HashMap<>();
@@ -29,50 +30,33 @@ public static int[] twoSum(int[] nums, int target) {
         return result;
     } 
 public int[] twoSum(int[] nums, int target) {
-            if(nums.length == 0){
-                return null;
-            }
-            
-            int left = 0;
-            int right = nums.length - 1;
-            int[] result = new int[2];
-            int a = 0, b = 0;
-            
-            
-            int[] nums2 = Arrays.copyOf(nums, nums.length);
-            Arrays.sort(nums2);
-            while(left <right){
-                int total = nums2[left] + nums2[right];
-                if(total == target){a = nums2[left]; b = nums2[right]; break;}
-                if(total > target){
-                    right--;
-                }else{
-                    left++;
-                }
-            }
-            
-        for(int k = 0;k<nums.length;k++){
-            if(nums[k]==a){
-                result[0]=k;
-                break;
-            }
+        int[] result = new int[2];
+        if(nums.length == 0) return result;
+        int[] numsCopy = Arrays.copyOf(nums, nums.length);
+        Arrays.sort(numsCopy);
+        int left = 0, right = nums.length-1;
+        while(left <= right){
+            int temptarget = numsCopy[left] + numsCopy[right];
+            if(temptarget == target) break;
+            else if(temptarget > target) right--;
+            else if(temptarget <target) left++;
         }
 
-        if(a!=b){
-            for(int k = 0;k<nums.length;k++){
-                if(nums[k]==b){
-                    result[1]=k;
-                    break;
-                }
+        int a = numsCopy[left], b = numsCopy[right];
+        if(a != b) {
+            for (int k = 0 ; k<nums.length; k++) {
+                if(nums[k] == a) {result[0] = k;break;}
+            }
+            for (int j = 0 ; j<nums.length; j++) {
+                if(nums[j] == b) {result[1] = j;break;}
             }
         }else{
-            for(int k =0;k<nums.length;k++){
-                if(nums[k]==b && k!=result[0]){
-                    result[1]=k;
-                    break;
-                }
+            for (int k = 0 ; k<nums.length; k++) {
+                if(nums[k] == a) {result[0] = k;break;}
             }
-
+            for (int j = result[0]+1 ; j<nums.length; j++) {
+                if(nums[j] == b) {result[1] = j;break;}
+            }
         }
-            return result;
+        return result;
   }
