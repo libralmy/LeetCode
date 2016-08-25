@@ -1,0 +1,39 @@
+    public static ListNode reverseBetween(ListNode head, int m, int n) {
+/*        ListNode dummyhead = new ListNode(0);
+        dummyhead.next = head;
+        ListNode tail = dummyhead;
+
+        ListNode prev = tail.next;
+        for(int i = 0; i< m -1; i++) prev = prev.next;
+
+        ListNode start = prev.next; //start of reverse list
+        ListNode startpoiter = start.next; //pointer of the reversed list
+        for(int i = 0 ; i<n-m; i++){
+            start.next = startpoiter.next;
+            startpoiter.next = prev.next;
+            prev.next = startpoiter;
+            startpoiter = start.next;
+        }
+
+        return dummyhead.next;*/
+        ListNode dummyhead = new ListNode(0);
+        dummyhead.next = head;
+        int distance = n - m;
+        int r = m;
+        while(r > 1){
+            dummyhead = dummyhead.next;
+            r--;
+        }
+        ListNode reversepointer = dummyhead.next;
+        while(distance > 0){
+            ListNode temp = reversepointer.next;
+            reversepointer.next = reversepointer.next.next;
+            temp.next = dummyhead.next;
+            dummyhead.next = temp;
+            distance--;
+        }
+        if(m == 1){
+            head = dummyhead.next;
+        }
+        return head;
+    }
