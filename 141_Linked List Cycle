@@ -1,6 +1,6 @@
  /**
-S1: reverse listNode, if the last one is == head, then it has cycle
-S2: two pointer, fast = fast.next.next; slow = slow.next;****/
+S1: reverse listNode, if the last one is == head, then it has cycle (this is for head = tail)
+S2: two pointer, fast = fast.next.next; slow = slow.next; if(slow == fast)return true (this is for inner cycly)****/
  
  
     public static boolean hasCycle(ListNode head) {
