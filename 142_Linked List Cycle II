@@ -1,5 +1,6 @@
 /**
-this is using linked list cycle idea to verify fast and slow can meet? then it has cycle
+this is using linked list cycle idea to verify fast and slow can meet? then it has cycle. 
+the meet point is in the cycle, other than that, they will never meet.
 after they meet, then while(slow != entry) entry starts from head, so slow = slow.next, entry = entry.next 
 get the entry node***/
 
