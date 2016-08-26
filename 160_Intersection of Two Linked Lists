@@ -2,7 +2,8 @@
 a1, a2, c1, c2, c3, b1, b2, b3,   c1, c2, c3
 b1, b2, b3, c1, c2, c3, a1, a2,   c1, c2, c3
 O(lenA + lenB)
-two new listNode = headA and headB
+two new listNode = headA and headB => these two are only the pointer!!!!
+while(newA != newB) if(newA == null) newA = headB;
 after they run out, add each other and continue until reach the common parts***/
 
 
