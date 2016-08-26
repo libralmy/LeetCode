@@ -1,5 +1,6 @@
 
 /***
+sorted array first
 start doesnt need to +1, because it needs to use same number
 add remain = target - nums[i]*****/
 
