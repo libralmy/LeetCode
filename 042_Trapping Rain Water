@@ -1,0 +1,52 @@
+/********same as sell stockI
+take the max when scan, max(leftmax, pointer) 
+if leftmax < pointer => update leftmax
+else sum += leftmax - pointer => current height of water
+same as right side scan
+O(n)time complexity O(1)space
+**************/
+public class Solution {
+    public int trap(int[] height) {
+
+        int sum = 0, left = 0, right = height.length -1, leftmax = 0, rightmax = 0;
+        while(left < right){
+            if(height[left] < height[right]){
+                if(height[left] > leftmax){
+                    leftmax = height[left];
+                }else{
+                    sum += leftmax - height[left];
+                }
+                left++;
+            }else{
+                if(height[right] > rightmax){
+                    rightmax = height[right];
+                }else{
+                    sum += rightmax - height[right];
+                }
+                right--;
+            }
+        }
+        return sum;
+        
+        
+                /*
+        int sum = 0, left = 0,right = height.length-1,secHeight =0;
+        
+        if(height ==null || height.length ==0)return 0;
+        while(left < right){
+            if(height[left]<height[right]){
+                secHeight = Math.max(secHeight,height[left]);
+                sum +=secHeight - height[left];
+                left++;
+            }else{
+                secHeight = Math.max(secHeight,height[right]);
+                sum+=secHeight - height[right];
+                right--;
+            }
+        }
+        
+        return sum;
+        */
+        
+    }
+}
