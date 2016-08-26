@@ -1,0 +1,44 @@
+    /**
+     * 1 use fast and slow pointers to find the midpoint of the list
+     * 2 fast record the midpoint.next, the point need to be reversed
+     * 3 disconnect list from the midpoint
+     * 4 return reversed fast to slow
+     * 5 while loop to merge the reversed list(slow) and original list ***/
+
+public class Solution {
+
+    public static void reorderList(ListNode head) {
+        if(head == null)return;
+        ListNode fast = head, slow = head;
+        //find the midpoint
+        while(fast !=null && fast.next !=null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        fast = slow.next;// record the startnode of list need to be reversed
+        slow.next = null;//disconnect list, prepare for the merge
+        slow = reverseList(fast);
+        
+        //merge the two lists
+        ListNode curr = head;
+        while(slow != null){
+            ListNode temp = curr.next;//get the original next
+            curr.next = slow;
+            slow = slow.next;
+            curr = curr.next; //move to next
+            curr.next = temp; //link the original next
+            curr = curr.next;//move all process to next;
+        }
+    }
+    
+    public static ListNode reverseList(ListNode head){
+        ListNode newhead = null;
+        while(head != null){
+            ListNode temp = head.next;
+            head.next = newhead;
+            newhead = head;
+            head = temp;
+        }
+        return newhead;
+    }
+}
