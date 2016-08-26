@@ -1,6 +1,7 @@
 
 /***
 sorted array first
+remain<0 => return; remain == 0 find it add to the new Arraylist; else forloop backtracking
 start doesnt need to +1, because it needs to use same number
 add remain = target - nums[i]*****/
 
