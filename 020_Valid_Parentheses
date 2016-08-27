@@ -1,7 +1,8 @@
     /**use stack to be the temp storage
      * all the parenthess should show up as couple, meet left, stack need to push right
      * else if statck is empty or ch[i+1] != stack.pop() return false
-     * return value need to make sure stack is empty()**/
+     * return value need to make sure stack is empty()
+     **/
 
 
 public class Solution {
