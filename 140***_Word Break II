@@ -1,0 +1,62 @@
+public class Solution {
+
+public List<String> wordBreak(String s, Set<String> wordDict) {
+    return DFS(s, wordDict, new HashMap<String, LinkedList<String>>());
+}       
+
+// DFS function returns an array including all substrings derived from s.
+List<String> DFS(String s, Set<String> wordDict, HashMap<String, LinkedList<String>>map) {
+    if (map.containsKey(s)) 
+        return map.get(s);
+        
+    LinkedList<String>res = new LinkedList<String>();     
+    if (s.length() == 0) {
+        res.add("");
+        return res;
+    }               
+    for (String word : wordDict) {
+        if (s.startsWith(word)) {
+            List<String>sublist = DFS(s.substring(word.length()), wordDict, map);
+            for (String sub : sublist) 
+                res.add(word + (sub.isEmpty() ? "" : " ") + sub);               
+        }
+    }       
+    map.put(s, res);
+    return res;
+}
+    
+        /** will fail "aaaaaaa"   ["aaaa","aa","a"]
+         * Expected:   ["a a a a a a a", "aa a a a a a"....
+         * Output:     ["a a a a a a a", "a a a aa".....
+     * use DFS iterate string
+     * for(i =start) if dict contains and then check if it is not the begining of stringbuilder, then set a space
+     * append substring, dfs, then back to start(stringbuilder.setLength(start))
+     * ***/
+     /*
+    public static List<String> wordBreak(String s, Set<String> wordDict) {
+        List<String> result = new ArrayList<>();
+        if(s.equals("") || wordDict.isEmpty()){return result;}
+        
+        DFS(wordDict, result, 0, s, new StringBuilder());
+        
+        return result;
+    }
+    public static void DFS(Set<String> wordDict, List<String> result, int start, String s, StringBuilder strBuild){
+        if(start == s.length()){
+            result.add(strBuild.toString());
+            return;
+        }
+        
+        for(int i = start; i<s.length(); i++){
+            if(wordDict.contains(s.substring(start, i+1))){
+                if(strBuild.length() != 0){
+                    strBuild.append(" ");
+                }
+                strBuild.append(s.substring(start, i+1));
+                DFS(wordDict, result, i+1, s, strBuild);
+                strBuild.setLength(start);
+            }
+        }
+    }
+    */
+}
