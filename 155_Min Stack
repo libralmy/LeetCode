@@ -1,17 +1,68 @@
-在ArrayList的基础上，使用get(), remove(), add() 实现栈
+/**
+ DS: ListNode
+ Process: push -> add to head
+          pop -> remove head
+          top -> show head
+          getMin -> update by push for geting the smallest elem
+ Notice: check the LinkList is null or not before taking action
+ Pram: @head - ListNode  
+       @minVal - store min val of input 
+ **/
+ 
+public ListNode head;
+public class MinStack {
+    class ListNode{
+        int val;
+        int minVal;
+        ListNode next;
+        ListNode(int x, int minVal){
+            this.val = x;
+            this.minVal = minVal;
+        }
+    }
+    public void push(int x) {
+        if(head != null){
+            ListNode oldhead = head;
+            head = new ListNode(x, Math.min(x, head.minVal));
+            head.next = oldhead;
+            
+        }else{
+            head = new ListNode(x, x);
+        }
+        //minVal = Math.min(x,minVal);
 
-push:   add 入 stack
-        如果 push 的值比minstack的最小值小，同时 add 入 minstack
-pop:    如果 pop 的值比目前最小值大，仅 remove 出 stack 中的值
-        如果 pop 的值即为目前的最小值，同时 remove 出 stack 和 minstack
-top:    返回 stack 顶部的值
-getMin: 返回 minStack 顶部的值
-O(1) runtime, O(n) space – Extra stack:
-/*
-Use an extra stack to keep track of the current minimum value. 
-During the push operation we choose the new element or the current minimum, 
-whichever that is smaller to push onto the min stack.
-*/
+    }
+
+    public void pop() {
+        if(head != null){
+            ListNode oldhead = head;
+            head = head.next;
+            oldhead = null;
+        }
+
+    }
+
+    public int top() {
+        if(head != null){
+            return head.val;
+        }else{
+            return -1;
+        }
+
+    }
+
+    public int getMin() {
+        if(head != null){
+            return head.minVal;
+        }else{
+            return -1;
+        }
+    }
+ 
+}
+
+
+
 public class MinStack {
     //注意：做任何操作前，都思考一下 stack / minStack 为空的状况
     /*****************ArrayList**********************/
@@ -45,6 +96,7 @@ public class MinStack {
     }
     */
     /**************************better solution two stacks***********************************/
+   /*
     Stack<Integer> stack = new Stack<Integer>();
     Stack<Integer> minStack = new Stack<Integer>();    
     
@@ -72,4 +124,20 @@ public class MinStack {
         if(minStack.empty()) return 0;
         return minStack.peek();
     }
+*/
 }
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(x);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
+ 
+ 
+ 
+ 
+ 
+ 
