@@ -8,10 +8,11 @@
      *
      * S2:
      * define a boolean array for get all products
-     * for i = 2, i<n
-     * if !arr[i] = > count++;
-     *      for j= 2; i*j <=n
-     *          arr[i*j] = true;**/
+     * 0, 1 are not prime, i start form 2 and smaller than n
+     * check isPrime[i] is reached or not, if not get in loop
+     * for i*other increasing number
+     * basically it is remove any 2*other, 3*other....n* other
+    **/
     public static int countPrimes(int n) {
         int count = 0;
         boolean[] isPrime = new boolean[n];//smaller than , so doesnt need to =
