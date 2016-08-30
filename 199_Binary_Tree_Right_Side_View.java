@@ -2,9 +2,9 @@
     /**
      * @param root: given a tree node
      * @return List<Integer> : return a Integer list that only contains right side of view
-     * S1: using BFS to check rightNode first -> add into queue, and then leftNode.
+     * S1: O(n)using BFS to check rightNode first -> add into queue, and then leftNode.
      *     add into result before poll() in the forloop
-     * S2: using DFS to go deepth of right side tree
+     * S2: O(logn)-O(n)using DFS to go deepth of right side tree
      * check has right node or not first, if not, then go check left node 
      * add treenode.value into list when depth == result.size()
      * */
