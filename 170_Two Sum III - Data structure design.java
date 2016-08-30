@@ -1,4 +1,5 @@
 /**
+* NONE of argument or method will be static!!!!!!!!!!!!!!!
 *@param number : input a int
 *@return void: add number into structure
 * 
@@ -11,7 +12,7 @@
 * add() -> use hashmap to check 
 * fint() -> forloop all the elem in the list
 *           need to consider about num1 = num2
-* 
+
 **/
 /** Test case
 *public class Test {
