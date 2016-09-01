@@ -6,30 +6,38 @@
  * if(a == b) result[0] = i; for(int k = i+1; k++) search b starts from i+1
  * check them in the original array**/
  
- 
- /********S2***********/
-/**use map<num[i], i>
-     * if(map.containsKey(target - nums[i])) result0 = map.get return result
-     * map.put(nums[i], i)
-     */
- 
-public static int[] twoSum(int[] nums, int target) {
+
+    /**
+     *@param nums given int array
+     *@param target given target that is the sum of two numbers in the nums[]
+     *@return the two indice of array
+     *
+     * Pre-condition: only one solution
+     * conner case: nums = null
+     * Map<nums[i], i>
+     * check map.containsKey(target - nums[i])
+     * No: add nums[i],
+     * Yes: fill in the indice and break loop
+     * **/
+  
+public class Solution {
+    public int[] twoSum(int[] nums, int target) {
         int[] result = new int[2];
+        if(nums == null){return result;}
         Map<Integer, Integer> map = new HashMap<>();
-
-        for(int i = 0; i< nums.length ; i++){
-            if(map.containsKey(target - nums[i])){
-
-                result[0] = map.get(target-nums[i]);
+        for(int i = 0; i < nums.length ; i++){
+            if(map.containsKey(target-nums[i])){
+                result[0] = map.get(target - nums[i]);
                 result[1] = i;
-                return result;
+                break;
+            }else{
+                map.put(nums[i], i);
             }
-            map.put(nums[i],i);
         }
-
         return result;
-    } 
-public int[] twoSum(int[] nums, int target) {
+    }
+    
+    public int[] twoSum(int[] nums, int target) {
         int[] result = new int[2];
         if(nums.length == 0) return result;
         int[] numsCopy = Arrays.copyOf(nums, nums.length);
@@ -59,4 +67,6 @@ public int[] twoSum(int[] nums, int target) {
             }
         }
         return result;
-  }
+        
+    }
+}
