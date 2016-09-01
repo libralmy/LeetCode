@@ -10,7 +10,9 @@
 * binary search n%2 != 0, then need to product extra x
 * just return mypowhelper(x*x, n/2)
 * 
-**/
+* IF wants to keep two decimal places, use Math.round(total *100)
+* return total/100
+**/ 
 
 public class Solution {
     public double myPow(double x, int n) {
@@ -34,3 +36,26 @@ public class Solution {
         else return x * mypowhelper(x*x, n/2);
     }
 }
+
+    public static double myPow(double x, int n) {
+        double total = 0;
+        if(n == 0 || x == 1){
+            return 1;
+        }else if( x == 0){
+            return 0;
+        }else if(n < 0){
+            n = -n;
+            total =  Math.round(mypowhelper(1/x, n)*100);
+        }else{
+           total =  Math.round(mypowhelper(x, n)*100);
+        }
+        return total/100;
+
+    }
+
+    public static double mypowhelper(double x, int n){
+        if(n == 0) return 1;
+
+        if(n%2 == 0) return mypowhelper(x*x, n/2);
+        else return x * mypowhelper(x*x, n/2);
+    }
