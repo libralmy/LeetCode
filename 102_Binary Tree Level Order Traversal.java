@@ -1,11 +1,11 @@
-
     /**
-     * @param root-given TreeNode
-     * @return List<List<Integer>> result- the leaf iteration of each level in the tree, from left to right
-     * conner case: root == null?
-     * S1: using BFS - iterate all the leaves from left to right, using queue to manage the order
-     * S2: using BFS - iterate all the leaves from left to right, using queue to manage the order
-     *                 instead forloop the size of queue, use while() and size-- at last
+     * @param root a given treenode
+     * @return a List<List<Integer>> level order traversal for each level
+     * 
+     * BFS: using a queue as the temp storage
+     *      input the root, and check left node , right node, 
+     *      save them in the templist for each level
+     *      add templist into result
      * **/
 
 
@@ -50,37 +50,6 @@ public class Solution {
         
         return result;
     }
-public List<List<Integer>> levelOrder(TreeNode root) {
-    List<List<Integer>> nodes = new ArrayList<>();
-    if(root==null){
-        return nodes;
-    }
-    
-    LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
-    
-    queue.add(root);
-    
-    while(queue.size()!=0){
-        
-        int size = queue.size();
-        List<Integer> layer_vals = new ArrayList<Integer>();
-        
-        while(size!=0){
-            TreeNode temp = queue.poll();
-            layer_vals.add(temp.val);
-            
-            if(temp.left!=null)queue.add(temp.left);
-            if(temp.right!=null)queue.add(temp.right);
-            
-            size--;
-        }
-        nodes.add(layer_vals);
-    }
-    
-    return nodes;
-}
-   
-
 
 
 }
