@@ -6,6 +6,9 @@
      *      input the root, and check left node , right node, 
      *      save them in the templist for each level
      *      add templist into result
+     * DFS: result.size() == level result.add(new ArrayList<>()
+     *      result.get(level++).add(node.val);
+     *      two recursion
      * **/
 
 
@@ -51,5 +54,18 @@ public class Solution {
         return result;
     }
 
+ public List<List<Integer>> levelOrder(TreeNode root) {
+    List<List<Integer>> levels = new ArrayList<>();
+    levelOrder(root, 0, levels);
+    return levels;
+}
+
+public void levelOrder(TreeNode node, int level, List<List<Integer>> levels) {
+    if (node == null) return;
+    if (levels.size() == level) levels.add(new ArrayList<>());
+    levels.get(level++).add(node.val);
+    levelOrder(node.left, level, levels);
+    levelOrder(node.right, level, levels);
+}
 
 }
