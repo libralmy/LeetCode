@@ -5,25 +5,66 @@
      * rtol[i] all the left side product after itself
      * result[i] = ltor * rtol => left side of product * right side of product
      * merge the last for right -> left loop *****/
+
+    /**
+     * @param nums a given int array
+     * @return a int array that product except self
+     *
+     * [1 , 2, 3, 4] [1] =>[2,3,4] [2]=>[1,3,4] ..
+     * from left to right
+     * ltor[]=>[1,1,2,6]
+
+     * from right to left
+     * rtol[] =>[24,6,3,1]
+     * 1
+     * ltor[i] = temp;
+     * temp *= num[i]
+     * 2
+     * rtol[i] = temp;
+     * temp *= num[i]
+     * 3
+     * ltor[i] *= rtol[i]
+     * 
+     * 2&3->2
+     * ltor[i] *= temp;
+     * **/
+public class Solution {
     public static int[] productExceptSelf(int[] nums) {
         int[] ltor = new int[nums.length];
-        int[] rtol = new int[nums.length];
-
-        if(nums == null){return rtol;}
-        for(int i = 0, temp =1; i<nums.length ; i++){
+        
+        for(int i = 0, temp = 1; i < nums.length ; i++){
             ltor[i] = temp;
             temp *= nums[i];
         }
-
-        for(int i = nums.length-1, temp =1; i>=0 ; i--){
+        
+        for(int i = nums.length-1, temp = 1; i >= 0 ; i--){
             ltor[i] *= temp;
             temp *= nums[i];
         }
-//        for(int i = nums.length-1 ; i>=0 ; i--){
-//            rtol[i] *=ltor[i];
-//        }
-
-
+        
         return ltor;
-
     }
+    
+    /* original slution
+    public static int[] productExceptSelf(int[] nums) {
+        int[] lefttoright = new int[nums.length];
+        int[] righttoleft = new int[nums.length];
+        //lefttoright[0] = 1;
+        //righttoleft[nums.length-1] = 1;
+        for(int i=0, temp=1; i<nums.length ; i++){
+            lefttoright[i] = temp;
+            temp *= nums[i];
+        }
+
+        for(int i=nums.length -1, temp =1 ; i>=0 ; i--){
+            righttoleft[i] = temp;
+            temp *= righttoleft[i];
+        }
+
+        for(int i=nums.length-1 ; i>=0 ; i--){
+            righttoleft[i] = lefttoright[i]*righttoleft[i];
+        }
+        return righttoleft;
+    }
+    */
+}
