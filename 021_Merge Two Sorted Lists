@@ -1,19 +1,39 @@
-/*****
-     * new a dummynode, and use tail as pointer points to dummynode in the beginning,
-     * tail will point to the smaller node.val,move node to next, as well as tail
-     * after while loop, add the none null node after the tail pointer
-     * return dummynode.next
-     */
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+ /**
+ * @param l1 sorted linked list
+ * @param l2 sorted linked list
+ * @return a linked list is the result of two merged list
+ * 
+ * S1 recurstion: 
+ *   stop point: l1 == null(return l2) || l2 == null(return l1)
+ *   same process l1.next = merge(l1.next,l2) return l1 || l2.next = merge(l1, l2.next) return l2
+ * 
+ * S2 iteration:
+ *   set a dummyhead and a pointer=> new linkedlist node(0)
+ *   compare l1.val < l2.val
+ *           p.next = l1;
+ *           l1 = l1.next;
+ *   same as l2
+ *   p = p.next;
+ * 
+ *   if(l1 = null) p.next = l2
+ *   same as l2
+ *   
+ *   return dummyhead.next
+ **/
+public class Solution {
     
-    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        /*
-        if(l1 == null ){
-            return l2;
-        }else if(l2 == null){
-            return l1;
-        }
-
-
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1 == null){ return l2;}
+        if(l2 == null){ return l1;}
+        
         if(l1.val < l2.val){
             l1.next = mergeTwoLists(l1.next, l2);
             return l1;
@@ -21,21 +41,27 @@
             l2.next = mergeTwoLists(l1, l2.next);
             return l2;
         }
-        */
-        ListNode DummyHead = new ListNode(0);
-        ListNode tail = DummyHead;
-        while(l1 != null && l2 !=null){
+        
+    }
+    
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummyhead = new ListNode(0);
+        ListNode pointer = dummyhead;
+        while(l1 != null && l2 != null){
             if(l1.val < l2.val){
-                tail.next = l1;
+                pointer.next = l1;
                 l1 = l1.next;
             }else{
-                tail.next = l2;
+                pointer.next = l2;
                 l2 = l2.next;
             }
-            tail = tail.next;
+            
+            pointer = pointer.next;
         }
-        if(l1 == null){tail.next = l2;}
-        if(l2 == null){tail.next = l1;}
-        return DummyHead.next;
-
+        if(l1 == null) pointer.next = l2;
+        if(l2 == null) pointer.next = l1;
+        
+        return dummyhead.next;
+        
     }
+}
