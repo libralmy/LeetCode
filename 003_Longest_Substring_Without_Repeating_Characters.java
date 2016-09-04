@@ -7,9 +7,11 @@
      *      slow pointer response for the repeat char, if char exsited, then reset lettermap that slow pointed, slow++
      *      fast pointer update int[] lettermap as 1 means it is exsited, and Max of count = fast-slow+1
      * S2: fast and slow pointer
-     * DS: HashSet -> save all the chars
-     *      slow pointer response for the repeat char, if exsited, remove from set and slow++
-     *      fast pointer put the char into set, max of count++, then fast++
+    * use hashset be the temp storage
+    * slow and fast pointer 
+    * fast<length
+    * when set contains si, set remove slow, slow++
+    * else set add si, max of count and size of set, fast++
      * **/
 public class Solution {    
    public int lengthOfLongestSubstring(String s) {
