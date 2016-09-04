@@ -12,6 +12,8 @@
     * 3-1-1 if currlen < minlen(should start at length+1, for"a", "a"), update minleft && minlen 
     * 3-1-2 if(map.contain(left))update frequency in map and the left pointer, and count--(if(map.get(lefti) > 0))
     * back to 2
+    * 
+    * http://articles.leetcode.com/finding-minimum-window-in-s-which/
     **/
     
 public class Solution {
