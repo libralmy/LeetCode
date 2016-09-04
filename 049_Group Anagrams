@@ -1,25 +1,35 @@
-    /**Map<sorted String as key, list of Anagrams>
-     * string.toCharArray() sorted
-     * char[] =>String.valueOf()
-     * print map.values()
-     * */
 
+    /**
+    * @param strs a given string array
+    * @return return the lists of string that in same anagram group
+    * //Str.toLowerCase() 
+    * use map<sortedStr, list of str> to build up a dict 
+    * iterate all the string in the array
+    *   sorted 
+    *   check if map contains string as index 
+    *       map.get(strKey).add(str);
+    * 
+    * return new ArrayList map.values()
+    * 
+    **/
 public class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
-        
         Map<String, List<String>> map = new HashMap<>();
-
+        
         for(String str : strs){
-            char[] sortedcharArry = str.toCharArray();
-            Arrays.sort(sortedcharArry);
-            String sortedStr = String.valueOf(sortedcharArry);
-            if(!map.containsKey(sortedStr)){
-                map.put(sortedStr, new ArrayList<>());
+            char[] strChar = str.toCharArray();
+            Arrays.sort(strChar);
+            String strKey = String.valueOf(strChar);
+            
+            if(!map.containsKey(strKey)){
+                map.put(strKey, new ArrayList<>());
             }
-            map.get(sortedStr).add(str);
-
+            map.get(strKey).add(str);
+            
         }
+        for(String key: map.keySet()) {
+		    Collections.sort(map.get(key));
+	    }
         return new ArrayList<>(map.values());
-
     }
 }
