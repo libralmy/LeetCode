@@ -2,6 +2,7 @@
     /**
     * @param strs a given string array
     * @return return the lists of string that in same anagram group
+    * O(m*log(m)) Arrays.sort() * n
     * //Str.toLowerCase() 
     * use map<sortedStr, list of str> to build up a dict 
     * iterate all the string in the array
