@@ -1,112 +1,96 @@
-/**1.The key to solve this problem is using a double linked list which enables us to quickly move nodes.
- *2.The LRU cache is a hash table of keys and double linked nodes. The hash table makes the time of get() to be O(1). The list of double linked nodes make the nodes adding/removal operations O(1).
- *use Node to control the connection, 
- * use HashMap<Integer, Node> to maintain the least recently used table
- * get()-> HashMap could be the control and update node as head. 
- * set()-> need to check capacity and add the node as head, 
- *          if it is over capacity, remove the tail
- * so need two extra function addNodetoHead() and removeNode()
- * removeNode() {node.pre == null? ; node.next == null? ;}
-**/
-/**
-The reason of causing the time limit problem is the queue implementation in Java (whether in ArrayList or LinkedList). The operations for a long queue are quite expensive. 
-1. ArrayList
-size(): O(1) there is a constant
-get(index): O(1)
-add(e): O(1)
-remove(index): O(n)
-remove(e): O(n)
-
-2. LinkedList
-size(); O(1) there is a constant
-get(index): O(n)
-add(e): O(1)
-remove(index): O(n)
-remove(e): O(n) (find the element, singly linked list)
-
-For our solution one, we intensively use remove operation for set() and get() operation. the time cost is really really big!!!!
-Can we solve this bottle neck? Yes, use doubly linked list to implement our own queue. In doubly linkedlist:
-1. remove(e), O(1)
-1. add(e), O(1)
-**/
+    /**
+     * @param key will represent as a hashkey
+     * @param value will be the LRU
+     *
+     * implement this LRUCache as double linked list with prev, next and intKey,intValue
+     *
+     * Map<intkey, LRUNode>, head, tail, intcapacity
+     * get() get the node, removefromlist() and movetohead(), update map, cuz it is been called recently
+     * set() get the node, removefromlist() and movetohead(), update map
+     *       not get the node, check the capacity-> over, removefromlist() and update map
+     *                                              fit, movetohead() and update map
+     *
+     **/
 
 public class LRUCache {
-    public Map<Integer, LRUNode> map = new HashMap<>();
-    public LRUNode head =null, tail = null;
-    public int capacity =0;
     
-    public LRUCache(int capacity) {
-        this.capacity = capacity;
-    }
-    
-    public void addtoHead(LRUNode node){
-        node.next = head;
-        node.pre = null;
-        if(head != null){
-            head.pre = node;
+        public LRUNode head = null, tail= null;
+        public Map<Integer, LRUNode> map = new HashMap<>();
+        public int capacity;
+
+        public LRUCache(int capacity) {
+            this.capacity = capacity;
         }
-        head = node;
-        if(tail == null){
-            tail = head;
-        }
-    }
-    public void removeNode(LRUNode node){
-        if(node.pre == null){
-            head = node.next;
-        }else{
-            node.pre.next = node.next;
-        }
-        if(node.next == null){
-            tail = node.pre;
-        }else{
-            node.next.pre = node.pre;
-        }
-    }
-    
-    public int get(int key) {
-        int value = -1;
-        if(map.containsKey(key)){
-            LRUNode tempNode = map.get(key);
-            value = tempNode.value;
-            removeNode(tempNode);
-            addtoHead(tempNode);
-        }
-        
-        return value;
-        
-    }
-    
-    public void set(int key, int value) {
-        if(map.containsKey(key)){
-            LRUNode tempNode = map.get(key);
-            tempNode.value = value;
-            map.put(key, tempNode);
-            //remove node before add, otherwise it will get redudance
-            removeNode(tempNode);
-            addtoHead(tempNode);
-        }else{
-            if(map.size() >= capacity){
-                //remove from map first and then remove the node, otherwise map got nothing to remove!
-                map.remove(tail.key);
-                removeNode(tail);
+
+        public int get(int key) {
+            int value = -1;
+            if(map.containsKey(key)){
+                LRUNode tempNode = map.get(key);
+                value = tempNode.value;
+                removefromlist(tempNode);
+                movetohead(tempNode);
             }
-            
-            LRUNode tempNode = new LRUNode(key, value);
-            map.put(key, tempNode);
-            addtoHead(tempNode);
+
+            return value;
+        }
+
+        public void set(int key, int value) {
+            if(map.containsKey(key)){
+                LRUNode tempNode = map.get(key);
+                tempNode.value = value;
+                map.put(key, tempNode);
+                removefromlist(tempNode);
+                movetohead(tempNode);
+            }else{
+                if(map.size() >= capacity){
+                    map.remove(tail.key);
+                    removefromlist(tail);
+                }
+
+                LRUNode newNode = new LRUNode(key, value);
+                map.put(key, newNode);
+                movetohead(newNode);
+                
+            }
+        }
+
+        public void removefromlist(LRUNode node){
+            if(node.prev == null){
+                head = node.next;
+            }else{
+                node.prev.next = node.next;
+            }
+
+            if(node.next == null){
+                tail = node.prev;
+            }else{
+                node.next.prev = node.prev;
+            }
+        }
+
+        public void movetohead(LRUNode node){
+            node.next = head;
+            node.prev = null;
+
+            if(head != null){
+                head.prev = node;
+            }
+            head = node;
+
+            if(tail == null){
+                tail = head;
+            }
+        }
+}
+
+
+    class LRUNode{
+        int key;
+        int value;
+        LRUNode prev;
+        LRUNode next;
+        LRUNode(int key, int value){
+            this.key = key;
+            this.value = value;
         }
     }
-}
-
-
-
-class LRUNode{
-    int key;
-    int value;
-    LRUNode pre;
-    LRUNode next;
-    LRUNode(int key, int value){
-        this.key = key;
-        this.value = value;
-    }
-}
