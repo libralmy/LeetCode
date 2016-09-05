@@ -10,7 +10,7 @@
     * use hashset be the temp storage
     * slow and fast pointer 
     * fast<length
-    * when set contains si, set remove slow, slow++
+    * when set contains si, set remove slow, slow++ (remove all till no repeat)
     * else set add si, max of count and size of set, fast++
      * **/
 public class Solution {    
