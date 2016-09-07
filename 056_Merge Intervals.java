@@ -13,6 +13,12 @@
     * 
     * conner case: list.size() <= 1 ---return @param
     * collection sort intervals based on start point
+    * Collections.sort(intervals, new Comparator<Interval>(){
+            @Override
+            public int compare (Interval i1, Interval i2){
+                return Integer.compare(i1.start, i2.start);
+            }
+        });
     * 
     * curStart <= preEnd
     * [preStart,        preEnd]
@@ -38,7 +44,6 @@ public class Solution {
             public int compare (Interval i1, Interval i2){
                 return Integer.compare(i1.start, i2.start);
             }
-            
         });
         
         int preStart = intervals.get(0).start;
