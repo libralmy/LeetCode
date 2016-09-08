@@ -1,40 +1,53 @@
 /**
- * s.split(" ") => array
- * backward track the string array
- * Notice: to avoid the duplicated space, it has to check arr[i].isEmpty()
- * StringBuilder to append " ", String[]
- * trim the result;
- **/
- 
-public class Solution {
-    public String reverseWords(String s) {
-        
-        String[] strArr = s.split(" ");
-        StringBuilder sb = new StringBuilder();
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
+ */
 
-        for(int i = strArr.length -1; i>=0 ; i--){
-            if(!strArr[i].isEmpty()){
-                sb.append(" ");
-                sb.append(strArr[i]);
-                
-            }
+    /**
+    * @param intervals - list of intervals
+    * @param newInterval
+    * @return insert - new list of intervals after original one been merged
+    * 
+    * connercase: list is empty=> add object in result
+    * 4 steps base on the iteration of i in list of intervals
+    * 1 find the new.start > iteration.end => add all the intervals ending before newInterval starts
+    * 2 get the new end >= iteration.start => merge all overlapping intervals to one considering newInterval
+    * 3 add new interval into list  add the union of intervals
+    * 4 add rest of intervals
+    * 
+    **/
+   public class Solution {
+    public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
+        List<Interval> result = new ArrayList<>();
+        if(intervals.isEmpty()){
+            intervals.add(newInterval);
+            return intervals;
         }
         
-        return sb.toString().trim();
-        /*
-        String[] word = s.split(" ");
-        StringBuilder sb = new StringBuilder();
-
-        for(int i = 0 ; i<word.length ; i++){
-            if(!word[i].isEmpty()){
-                sb.insert(0, " ");
-                sb.insert(0, word[i]);
-
-            }
+        int i = 0;
+        while(i < intervals.size() && newInterval.start > intervals.get(i).end){
+            result.add(intervals.get(i));
+            i++;
         }
-
-        return sb.toString().trim();
-        */
+        
+        while(i < intervals.size() && newInterval.end >= intervals.get(i).start){
+            newInterval.start = Math.min(intervals.get(i).start, newInterval.start);
+            newInterval.end = Math.max(intervals.get(i).end, newInterval.end);
+            
+            i++;
+        }
+        result.add(newInterval);
+        while(i < intervals.size()){
+            result.add(intervals.get(i));
+            i++;
+        }
+        
+        return result;
         
     }
 }
