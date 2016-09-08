@@ -1,88 +1,120 @@
 public class Solution {
-    public List<List<String>> findLadders(String start, String end, Set<String> dict) {
-
-        List<List<String>> res = new ArrayList<List<String>>();
-        HashMap<String, ArrayList<String>> neighbors = new HashMap<String, ArrayList<String>>();
-        HashMap<String, Integer> distance = new HashMap<String, Integer>();
-        ArrayList<String> path = new ArrayList<String>();
-
-        dict.add(start);
-        dict.add(end);
-
-        bfs(start, end, dict, neighbors, distance);
-        dfs(start, end, dict, neighbors, distance, path, res);
-        return res;
-    }
-
-
     /**
-     * 设置字符串的相邻字符串列表及每个字符串到开始节点的距离(即给neighbors、distance赋值)
-     */
-    private void bfs(String start, String end, Set<String> dict, HashMap<String, ArrayList<String>> neighbors, HashMap<String, Integer> distance) {
-        for (String str : dict)
-            neighbors.put(str, new ArrayList<String>());
-        Queue<String> queue = new LinkedList<String>();
-        queue.offer(start);
-        distance.put(start, 0);
-        while (!queue.isEmpty()) {
+    * @param neighbours Graph Map<word, list of All the elem that only change one char>
+    * @param distance Unique Map<word, distance from the beginWord>
+    * @param trail of shorttest path List<words>
+    * @bfs(start, end, dict, neighbors, distance) - build up the neighbours map 
+    * @getNeighbours() - get all the elements that only change one char (part of bfs)
+    * @dfs(start, end, dict, neighbors, distance, path, result) - backtracking to record the shortest path based on distance map and iteration of neighours map
+    * 
+    * main()-   add start and end word into dict, start bfs and dfs
+    * bfs() -   push all the words in dict into neighbours map
+    *           setup the start point - queue.offer(start), distance.put(start, 0)
+    *           sign of foundEnd 
+    *           get current distance for praparing addup
+    *           get all the list of current neighbours
+    *           iterate the neighbours
+    *               add into neighbours map
+    *               distance map only record the key neighbour is not exsited and addup the distance based on                   the current distace
+    *               if foundEnd => update true- will end after the loop
+    *               else offer the neighbour into queue
+    *           after the iteration, if found end then break;
+    * dfs() -   setup begin point path.add(currstart)
+    *           setup end point endWord.equals(curstart) => add into list
+    *           iteration of neighbours map for each curstart
+    *               if currstart distance +1 = distance map.get(currstart)
+    *                   dfs()
+    *           remove(size-1)
+    **/
+    
+    public Map<String, List<String>> neighbours;
+    public Map<String, Integer> distance;
+    public List<String> path;
+    
+    public List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList) {
+        List<List<String>> result =  new ArrayList<>();
+        if(wordList.size() == 0) return result;
+        wordList.add(beginWord);
+        wordList.add(endWord);
+        
+        neighbours = new HashMap<>();
+        distance = new HashMap<>();
+        path = new ArrayList<>();
+        
+        bfs(neighbours, distance, beginWord, endWord, wordList);//build up neighbours map, distance map -> Graph
+        dfs(neighbours, distance, beginWord, endWord, wordList, result, path);//record the shortest path based on Graph
+        
+        return result;
+        
+    }
+    
+    public void dfs(Map<String, List<String>> neighbours, Map<String, Integer> distance, 
+                    String currbeginWord, String endWord, Set<String> wordList, List<List<String>> result,List<String> path){
+        path.add(currbeginWord);
+        if(endWord.equals(currbeginWord)){
+            result.add(new ArrayList<>(path));
+            return;
+        }else{
+            for(String currNeigh : neighbours.get(currbeginWord)){
+                if(distance.get(currNeigh) == distance.get(currbeginWord) +1){
+                   dfs(neighbours, distance, currNeigh, endWord, wordList, result, path); 
+                }
+            }
+        }
+        path.remove(path.size()-1);
+    }
+    
+    public void bfs(Map<String, List<String>> neighbours, Map<String, Integer> distance, 
+                    String beginWord, String endWord, Set<String> wordList){
+        for(String w : wordList){
+            neighbours.put(w, new ArrayList<>());
+        }
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(beginWord);
+        distance.put(beginWord, 0);
+        
+        while(!queue.isEmpty()){
             int size = queue.size();
             boolean foundEnd = false;
-            for (int i = 0; i < size; i++) {
-                String cur = queue.poll();
-                int curDistance = distance.get(cur);
-                ArrayList<String> curNeighbors = getNeighbors(cur, dict);
-
-                for (String neighbor : curNeighbors) {
-                    neighbors.get(cur).add(neighbor);
-                    if (!distance.containsKey(neighbor)) {
-                        distance.put(neighbor, curDistance + 1);
-                        if (end.equals(neighbor))
-                            foundEnd = true;
-                        else
-                            queue.offer(neighbor);
+            for(int i = 0 ; i < size; i++){
+                String strWord = queue.poll();
+                int currDist = distance.get(strWord);
+                ArrayList<String> listcurrNeighbour = getNeighbours(strWord, wordList); 
+                
+                for(String neighbour : listcurrNeighbour){
+                    neighbours.get(strWord).add(neighbour);
+                    if(!distance.containsKey(neighbour)){
+                        distance.put(neighbour, currDist+1);
+                    }
+                    
+                    if(endWord.equals(neighbour)){
+                        foundEnd = true;
+                    }else{
+                        queue.offer(neighbour);
                     }
                 }
             }
-            //循环退出条件,当找到end的时候,就没有必要继续循环了,因为题目要求的是最短路径
-            if (foundEnd)
+            if(foundEnd){
                 break;
-        }
-    }
-
-    /**
-     * 查找字符串的相邻字符串列表(即字符串只更改一个字符之后得到的而且包含在字典表中的字符串)
-     */
-    private ArrayList<String> getNeighbors(String str, Set<String> dict) {
-        ArrayList<String> res = new ArrayList<String>();
-        char arr[] = str.toCharArray();
-        for(int i=0;i<arr.length;i++){
-            for(char c='a';c<='z';c++){
-                if(arr[i]==c) continue;
-                char tmp=arr[i];
-                arr[i]=c;
-                if(dict.contains(String.valueOf(arr))) res.add(String.valueOf(arr));
-                arr[i]=tmp;
             }
+            
         }
-        return res;
     }
-
-    /**
-     * 统计路径
-     */
-    private void dfs(String cur, String end, Set<String> dict, HashMap<String, ArrayList<String>> neighbors, HashMap<String, Integer> distance, ArrayList<String> path, List<List<String>> res) {
-
-        path.add(cur);
-        if (end.equals(cur)) {
-            res.add(new ArrayList<String>(path));
-        }else {
-            for (String next : neighbors.get(cur)) {
-                if (distance.get(next) == distance.get(cur) + 1) {
-                    dfs(next, end, dict, neighbors, distance, path, res);
+    
+    public ArrayList<String> getNeighbours(String strWord, Set<String> wordList){
+        ArrayList<String> tempList = new ArrayList<>();
+        for(int i = 0; i < strWord.length(); i++){
+            char[] chArrystrWord = strWord.toCharArray();
+            for(char ch = 'a'; ch <= 'z'; ch++){
+                chArrystrWord[i] = ch;
+                String strWordKey = String.valueOf(chArrystrWord);
+                if(wordList.contains(strWordKey)){
+                    tempList.add(strWordKey);
                 }
             }
+            
         }
-        //当回退的时候需要从path中删除相关节点
-        path.remove(path.size() - 1);
+        
+        return tempList;
     }
 }
