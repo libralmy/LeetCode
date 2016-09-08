@@ -1,7 +1,17 @@
 
 
 public class Solution {
-
+    /**
+    * BFS
+    * add end word to the dict
+    * push beginword to queue
+    *   set return count+1 when current poll() = endword
+    *   covert the word poll from queue to charArray and change every char,
+    *   then check if it is in the dict and does not = current poll()
+    *   if it is, add it into queue, remove form dict for avoding duplicate
+    *   count++
+    * return 0;
+    **/
     /**
      * @param beginWord a string start to trace
      * @param endWord a string end the trace
@@ -14,13 +24,7 @@ public class Solution {
      * **/
      
      
-     /**
-     * push  the endword to wordlist
-     * use queue to store the word that needs to be checked, first loop size of queue, if poll() == end word, return count +1
-     * get the word 
-     * change to char array IN the iteration of string elements
-     * change every element and check if it is exsited in the wordlist, then count++, and remove it from wordlist
-     **/
+
     public static int ladderLength(String beginWord, String endWord, Set<String> wordList) {
         if(wordList.isEmpty()){return 0;}
 
