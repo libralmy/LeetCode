@@ -1,4 +1,4 @@
-public class Solution {
+
     /**
     * @param neighbours Graph Map<word, list of All the elem that only change one char>
     * @param distance Unique Map<word, distance from the beginWord>
@@ -26,7 +26,7 @@ public class Solution {
     *                   dfs()
     *           remove(size-1)
     **/
-    
+public class Solution {    
     public Map<String, List<String>> neighbours;
     public Map<String, Integer> distance;
     public List<String> path;
