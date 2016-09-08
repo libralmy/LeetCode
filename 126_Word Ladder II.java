@@ -1,94 +1,88 @@
 public class Solution {
-  class Node {
-    String word;
-    int level;
+    public List<List<String>> findLadders(String start, String end, Set<String> dict) {
 
-    public Node(String word, int level) {
-        this.word = word;
-        this.level = level;
-    }
-}
+        List<List<String>> res = new ArrayList<List<String>>();
+        HashMap<String, ArrayList<String>> neighbors = new HashMap<String, ArrayList<String>>();
+        HashMap<String, Integer> distance = new HashMap<String, Integer>();
+        ArrayList<String> path = new ArrayList<String>();
 
-    private String end;
-    private List<List<String>> res;
-    private Map<String, List<String>> maps;
-
-    public List<List<String>> findLadders(String start, String end,
-                                                    Set<String> dict) {
-        res = new ArrayList<>();
-        // unvisited words set
+        dict.add(start);
         dict.add(end);
-        dict.remove(start);
-        // used to record the map info of <word : the words of next level>
-        maps = new HashMap<>();
-        for (String e : dict) {
-            maps.put(e, new ArrayList<>());
-        }
 
-        // BFS to search from the end to start
-        Queue<Node> queue = new LinkedList<Node>();
-        queue.add(new Node(start, 0));
-        boolean found = false;
-        int finalLevel = Integer.MAX_VALUE;
-        int currentLevel = 0;
-        Set<String> visitedWordsInThisLevel = new HashSet<>();
+        bfs(start, end, dict, neighbors, distance);
+        dfs(start, end, dict, neighbors, distance, path, res);
+        return res;
+    }
 
+
+    /**
+     * 设置字符串的相邻字符串列表及每个字符串到开始节点的距离(即给neighbors、distance赋值)
+     */
+    private void bfs(String start, String end, Set<String> dict, HashMap<String, ArrayList<String>> neighbors, HashMap<String, Integer> distance) {
+        for (String str : dict)
+            neighbors.put(str, new ArrayList<String>());
+        Queue<String> queue = new LinkedList<String>();
+        queue.offer(start);
+        distance.put(start, 0);
         while (!queue.isEmpty()) {
-            Node node = queue.poll();
-            String word = node.word;
-            int level  = node.level;
-            if (level > finalLevel) {
-                break;
-            }
-            if (level > currentLevel) {
-                dict.removeAll(visitedWordsInThisLevel);
-                visitedWordsInThisLevel.clear();
-            }
-            currentLevel = level;
-            char[] wordCharArray = word.toCharArray();
-            for (int i = 0; i < word.length(); ++i) {
-                char originalChar = wordCharArray[i];
-                boolean foundInThisCycle = false;
-                for (char c = 'a'; c <= 'z'; ++c) {
-                    wordCharArray[i] = c;
-                    String newWord = new String(wordCharArray);
-                    if (c != originalChar && dict.contains(newWord)) {
-                        maps.get(newWord).add(word);
-                        if (newWord.equals(end)) {
-                            found = true;
-                            finalLevel = currentLevel;
-                            foundInThisCycle = true;
-                            break;
-                        }
-                        if (visitedWordsInThisLevel.add(newWord)) {
-                            queue.add(new Node(newWord, currentLevel + 1));
-                        }
+            int size = queue.size();
+            boolean foundEnd = false;
+            for (int i = 0; i < size; i++) {
+                String cur = queue.poll();
+                int curDistance = distance.get(cur);
+                ArrayList<String> curNeighbors = getNeighbors(cur, dict);
+
+                for (String neighbor : curNeighbors) {
+                    neighbors.get(cur).add(neighbor);
+                    if (!distance.containsKey(neighbor)) {
+                        distance.put(neighbor, curDistance + 1);
+                        if (end.equals(neighbor))
+                            foundEnd = true;
+                        else
+                            queue.offer(neighbor);
                     }
                 }
-                if (foundInThisCycle) {
-                    break;
-                }
-                wordCharArray[i] = originalChar;
             }
+            //循环退出条件,当找到end的时候,就没有必要继续循环了,因为题目要求的是最短路径
+            if (foundEnd)
+                break;
         }
-        if(found){
-            List<String> tmplist = new LinkedList<>();
-            generatePath(end,start,tmplist);
+    }
+
+    /**
+     * 查找字符串的相邻字符串列表(即字符串只更改一个字符之后得到的而且包含在字典表中的字符串)
+     */
+    private ArrayList<String> getNeighbors(String str, Set<String> dict) {
+        ArrayList<String> res = new ArrayList<String>();
+        char arr[] = str.toCharArray();
+        for(int i=0;i<arr.length;i++){
+            for(char c='a';c<='z';c++){
+                if(arr[i]==c) continue;
+                char tmp=arr[i];
+                arr[i]=c;
+                if(dict.contains(String.valueOf(arr))) res.add(String.valueOf(arr));
+                arr[i]=tmp;
+            }
         }
         return res;
     }
-    private void generatePath(String start,String end,List<String> list){
-        if(start.equals(end)){
-            List<String> tmplist = new LinkedList<>(list);
-            tmplist.add(end);
-            Collections.reverse(tmplist);
-            res.add(tmplist);
-            return;
+
+    /**
+     * 统计路径
+     */
+    private void dfs(String cur, String end, Set<String> dict, HashMap<String, ArrayList<String>> neighbors, HashMap<String, Integer> distance, ArrayList<String> path, List<List<String>> res) {
+
+        path.add(cur);
+        if (end.equals(cur)) {
+            res.add(new ArrayList<String>(path));
+        }else {
+            for (String next : neighbors.get(cur)) {
+                if (distance.get(next) == distance.get(cur) + 1) {
+                    dfs(next, end, dict, neighbors, distance, path, res);
+                }
+            }
         }
-        list.add(start);
-        List<String> tmplist = maps.get(start);
-        for(String e:tmplist)
-            generatePath(e,end,list);
-        list.remove(list.size()-1);
+        //当回退的时候需要从path中删除相关节点
+        path.remove(path.size() - 1);
     }
 }
