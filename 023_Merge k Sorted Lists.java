@@ -17,7 +17,7 @@
     *   slit it and merge two listNode
     *   or else return null
     * merge() return two sorted list
-    * 
+    * it is O(nlogk), merge takes O(n) time and partition takes O(logk) time
     **/
     
     public class Solution {
@@ -52,5 +52,26 @@
             return l2;
         }
         
+    }
+    
+    public ListNode merge(ListNode l1, ListNode l2){
+        ListNode dummyhead = new ListNode(0);
+        ListNode pointer = dummyhead;
+        
+        while(l1 != null && l2 != null){
+            if(l1.val < l2.val){
+                pointer.next = l1;
+                l1 = l1.next;
+            }else{
+                pointer.next = l2;
+                l2 = l2.next;
+            }
+            pointer = pointer.next;
+        }
+        
+        if(l1 == null){ pointer.next = l2;}
+        if(l2 == null){pointer.next = l1;}
+        
+        return dummyhead.next;
     }
 }
