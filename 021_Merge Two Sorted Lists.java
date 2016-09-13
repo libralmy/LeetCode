@@ -16,17 +16,17 @@
  *   same process l1.next = merge(l1.next,l2) return l1 || l2.next = merge(l1, l2.next) return l2
  * 
  * S2 iteration:
- *   set a dummyhead and a pointer=> new linkedlist node(0)
- *   compare l1.val < l2.val
- *           p.next = l1;
- *           l1 = l1.next;
- *   same as l2
- *   p = p.next;
- * 
- *   if(l1 = null) p.next = l2
- *   same as l2
- *   
- *   return dummyhead.next
+    * BFS:
+    * dummyhead, pointer
+    * while l1 and l2 is not null
+    *   l1.val < l2.val
+    *   pointer = new node(l1.val)
+    *   l1 = l1.next
+    *   same as l2
+    *   pointer = pointer.next
+    * if finish l1, add rest of l2
+    * same as l2
+    * return dummyhead.next
  **/
 public class Solution {
     
