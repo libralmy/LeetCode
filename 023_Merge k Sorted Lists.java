@@ -12,11 +12,13 @@
     * @return a single ListNode merged by the array
     * 
     * find patition and divided into merge two sorted list
-    * partition() 
-    *   stop point- start == end return list[start]
-    *   slit it and merge two listNode
-    *   or else return null
-    * merge() return two sorted list
+    *   findpartition([], start, end) merge every two list use findpartition = (start + end)/2
+    *      
+    *       stop point start == end return lists[start]
+    *       if start < end get l1([], start, partition)
+    *                          l2([], partition+1, end)
+    *           merge(l1, l2)
+    *       else return null
     * it is O(nlogk), merge takes O(n) time and partition takes O(logk) time
     **/
     
