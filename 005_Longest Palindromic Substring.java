@@ -1,37 +1,38 @@
 
     /**
-     * @param s: input string 
-     * @return longest palindorm string
-     * conner case if(s.length() <= 1) return s;
-     * <-|-> wing solution
-     * iterate all the elem in string
-     * use extra function to decide it is Palindorme or not, and recover the left and right pointer from last while
-     * verify the length of string is odd or even
+    * @param s a given string
+    * @return a string that has longest palindrome
+    * conner case if(s == null || s.length() <= 1) return s;
+    * Palidrome: <-|-> 
+    * Length is odd helper(s, i, i+1) verify pointer first, then chrLeft == chrRight, reverse after last step
+    * Length is even helper(s, i, i)
+    * temp run for both
+    * refresh strlongest
+    * 
+    * return strlongest 
      * https://discuss.leetcode.com/topic/35582/java-easy-understanding-solution-beats-97/3
     **/
 public class Solution {
-    public static String longestPalindrome(String s) {
-        if(s.length() <= 1) return s;
-        String longestStr = s.substring(0,1);
+    public String longestPalindrome(String s) {
         
-        for(int i = 0; i < s.length() ; i++){
+        if(s == null || s.length() <= 1) return s;
+        String strlongest = s.substring(0,1);
+        
+        for(int i = 0; i < s.length(); i++){
+            String temp = helper(s, i, i);
+            strlongest = strlongest.length() >= temp.length()? strlongest : temp;
             
-            String temp = isPalindorme(s, i, i);//odd
-            longestStr = longestStr.length() >= temp.length()? longestStr : temp;
-            
-            temp = isPalindorme(s, i, i+1);//even
-            longestStr = longestStr.length() >= temp.length()? longestStr : temp;
+            temp = helper(s, i, i+1);
+            strlongest = strlongest.length() >= temp.length()? strlongest : temp;
         }
-        
-        return longestStr;
+        return strlongest;
     }
     
-    static String isPalindorme(String s, int toleft, int toright){
-        
-        while(toleft >= 0 && toright < s.length() && s.charAt(toleft) == s.charAt(toright)){
-            toleft--;
-            toright++;
+    public String helper(String s, int toLeft, int toRight){
+        while(toLeft >=0 && toRight < s.length() && s.charAt(toLeft) == s.charAt(toRight)){
+            toLeft--;
+            toRight++;
         }
-        return s.substring(toleft+1, toright);
+        return s.substring(toLeft+1, toRight);
     }
 }
