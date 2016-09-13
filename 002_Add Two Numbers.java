@@ -1,20 +1,17 @@
-/**
- * @param l1 a given ListNode
- * @param l2 a given ListNode
- * @return add each node of l1 and l2, from left to right
- * 
- * initial a new Node for result and creat a dummyhead(0)
- * three pointer which points to l1, l2 and dummyhead
- * addup all digits when any of pointers l1 and l2 is not null, or carry not null
- * sum = a + b + carry!!!
- * reminder = sum%10
- * carry = sum/10
- * setup resultnode value as reminder
- * move pointer to next
- * conner case: l1 or l2 might not have same size 
- *              
- * 
- */
+    /**
+    * @param l1, l2  two given list
+    * @return one ListNode
+    * 
+    * sum, carry to next digit, remain in current digit
+    * need two pointer for l1 and l2
+    * l1 and l2 might not have same length,or carry one more; while(p1!=null||p2!=null||carry!=0)
+    * add up two digits, carry = sum/10, remain = sum%10
+    * need to check p1 == null? before .next
+    * pointer.next = new ListNode(remain);
+    * 
+    * ListNode dummyhead.next is the return
+    * 
+    **/
 
 /**
  * Definition for singly-linked list.
@@ -24,27 +21,31 @@
  *     ListNode(int x) { val = x; }
  * }
  */
-
 public class Solution {
 
-    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        if(l1 == null){ return l2;}
+        if(l2 == null){ return l1;}
         ListNode dummyhead = new ListNode(0);
-        ListNode a = l1, b = l2, result = dummyhead;
-        int reminder = 0, carry = 0, sum = 0;
+        ListNode pointer = dummyhead;
+        ListNode p1 = l1, p2 = l2;
         
-        while(a != null || b != null || carry != 0){
-            sum = (a == null? 0 : a.val) + (b == null? 0 : b.val) + carry;
-            reminder = sum % 10;
+        int sum = 0, carry = 0, remain = 0;
+        while(p1 != null || p2 != null || carry != 0){
+            sum = (p1 == null? 0: p1.val) + (p2 == null? 0: p2.val) + carry;
             carry = sum/10;
-            result.next = new ListNode(reminder);
-            result = result.next;
+            remain = sum%10;
             
-            a = (a != null? a.next : null);
-            b = (b != null? b.next : null);
+            pointer.next = new ListNode(remain);
+            pointer = pointer.next;
+            
+            p1 = (p1 == null ? null : p1.next);
+            p2 = (p2 == null ? null : p2.next);
+           
         }
         return dummyhead.next;
-
     }
+}
  /*
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         return helper(l1,l2,0);
