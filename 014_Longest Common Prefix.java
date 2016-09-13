@@ -1,25 +1,28 @@
 
     /**
-    * @param strs a given string array 
-    * @return the longest common prefix of this string array
-    * 
-    * sorted str array
-    * compare the common part between first and last elem
+    * @param a given string array
+    * @return longest prefix
+    * conner case: strs == null || strs.length == 0
+    * sort array
+    * use StringBuilder.append
+    * get the common part from strs[1] and strs[length -1]
+    * return sb.toString()
     **/
 public class Solution {
     public String longestCommonPrefix(String[] strs) {
-        if(strs.length == 0){return "";}
+        
+        if(strs == null || strs.length == 0 || strs[0].length() == 0){return "";}
+        StringBuilder strPrefix = new StringBuilder();
         Arrays.sort(strs);
-        StringBuilder s = new StringBuilder();
-        for(int i = 0; i < strs[0].length() ; i++){
-            if(strs[0].charAt(i) == strs[strs.length -1].charAt(i)){
-                s.append(strs[0].charAt(i));
+        
+        for(int i = 0 ; i < strs[0].length() ; i++){
+            if(strs[0].charAt(i) == strs[strs.length - 1].charAt(i)){
+                strPrefix.append(strs[0].charAt(i));
             }else{
-                return s.toString();
+                return strPrefix.toString();
             }
         }
         
-        return s.toString();
+        return strPrefix.toString();
     }
-
 }
