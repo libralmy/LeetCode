@@ -12,7 +12,7 @@
     * @param intervals - list of intervals
     * @param newInterval
     * @return insert - new list of intervals after original one been merged
-    *                  [new.s, new.e]
+    *                  [new.s,    new.e]
     * [iter.s, iter e]       [iter.s,   iter e]
     * connercase: list is empty=> add object in intervals list and return intervals
     * i < intervals.size() in 3 while
