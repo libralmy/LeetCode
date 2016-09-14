@@ -41,44 +41,46 @@
 public class Solution {
     public List<String> fullJustify(String[] words, int maxWidth) {
         List<String> result = new ArrayList<>();
-        if( words == null || maxWidth < 0 || words.length ==0){return result;}
-        List<String> eachline = new ArrayList<>();
-        int currWordlen = 0, div = 0, mod = 0;
-        String str = "";
-
+        if(words == null || words.length == 0 || maxWidth < 0){return result;}
+        
+        int dev = 0, mod = 0, currLength = 0;
+        List<String> temp = new ArrayList<>();
+        String inLine = "";
+        
         for(int i = 0; i < words.length ; i++){
-            if(currWordlen + words[i].length() + eachline.size() <= maxWidth){
-                eachline.add(words[i]);
-                currWordlen += words[i].length();
+            if(temp.size() + words[i].length()+ currLength <= maxWidth){
+                temp.add(words[i]);
+                currLength += words[i].length();
             }else{
-                if(eachline.size() == 1){
-                    str = eachline.get(0);
-                    for(int k = maxWidth - str.length(); k >0; k--){str +=" ";}
-                }else if(eachline.size() > 1){
-                    div = (maxWidth - currWordlen)/(eachline.size() - 1);
-                    mod = (maxWidth - currWordlen)%(eachline.size() - 1);
-                    str = eachline.get(0);
-                    for(int j = 1; j < eachline.size() ; j++){
-                        for(int k = 0; k < div; k++) str +=" ";
-                        if(j <= mod){ str +=" ";}
-                        str += eachline.get(j);
+                if(temp.size() == 1){
+                    inLine = temp.get(0);
+                    for(int k = maxWidth-inLine.length(); k > 0; k--){
+                        inLine +=" ";
+                    }
+                }else if(temp.size() > 1){
+                    //int spaceCount = temp.size()-1;
+                    dev = (maxWidth - currLength) / (temp.size()-1);
+                    mod = (maxWidth - currLength) % (temp.size()-1);
+                    inLine = temp.get(0);
+                    for(int j = 1; j < temp.size(); j++){
+                        for(int d = 0; d < dev; d++){inLine +=" ";}
+                        if(j <= mod) {inLine+=" ";}
+                        inLine += temp.get(j);
                     }
                 }
-
-                result.add(str);
-                eachline.clear();
-                eachline.add(words[i]);
-                currWordlen = words[i].length();
+                result.add(inLine);
+                temp.clear();
+                temp.add(words[i]); //cause it is not been added in the last if
+                currLength = words[i].length();//cause it is not been added in the last if
             }
         }
-
-        //last line
-        str = eachline.get(0);
-        for(int j = 1; j < eachline.size(); j++){str += " " + eachline.get(j);}
-        for(int k = maxWidth - str.length(); k >0; k--){str +=" ";}
-        result.add(str);
-
-        return result;
-
+        
+        inLine = temp.get(0);
+        for(int j = 1; j < temp.size(); j++){inLine += " "+ temp.get(j);}
+        for(int k = maxWidth-inLine.length(); k >0 ; k--){
+                inLine +=" ";
+         }
+        result.add(inLine);
+        return result; 
     }
 }
