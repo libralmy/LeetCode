@@ -6,8 +6,9 @@
     * backtracking [1]+[1,2],[2]+[1,1]
     * nums need to be sorted before using, [1,2,1]then could adjust iteration
     * stop point: tempList.size() == nums.length
-    * iteration nums (first round is not getting afface, so i still start from 0)
-    * current is been used, (i>0) and previous one is euqal to current one, in the mean time previous one is finished backtracking 
+    * iteration nums 
+    * current is been used, continue
+    * (i>0) and previous one is euqal to current one, in the mean time previous one is not finished backtracking,continue
     * if(used[i] || i>0 && nums[i-1] == nums[i] && !used[i-1] ) continue;
     **/
 public class Solution {
@@ -25,7 +26,8 @@ public class Solution {
         }
         
         for(int i = 0; i < nums.length; i++){
-            if(used[i] || i >0 && !used[i-1] && nums[i] == nums[i-1]) continue;
+            if(used[i]) continue; //[112] all the repeat combination
+            if(i >0 && !used[i-1] && nums[i] == nums[i-1]) continue; // !used[i-1] previous one is not finish backtracking yet
             
             used[i]= true;
             tempList.add(nums[i]);
