@@ -25,7 +25,7 @@
     *                   
     *           result.add(line)
     *           line.clear()
-    *           //prepare for the nextline
+    *           //prepare for the nextline, cause it is not been added in the last if
     *           line.add(word[i])
     *           currWordlen = word[i].length
     * 
@@ -35,7 +35,8 @@
     * fill up the rest of space
     * result.add(line)                 
     *                   
-    * return result           
+    * return result
+    * // add rest of spacefor(int k = maxWidth-inLine.length(); k > 0; k--){inLine +=" ";}
     **/
 public class Solution {
     public List<String> fullJustify(String[] words, int maxWidth) {
