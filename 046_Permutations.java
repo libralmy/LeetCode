@@ -1,4 +1,4 @@
-public class Solution {
+
     /**
     * @param nums a given int array
     * @return all the permutation
@@ -12,8 +12,8 @@ public class Solution {
     *       void dfs(boolean[] used, nums, templist, result)
     *       temp.remove(size-1)
     *       used[]=false;//reverse
-    * 
     **/
+public class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         if(nums == null || nums.length == 0){return result;}
