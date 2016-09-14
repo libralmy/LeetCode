@@ -12,12 +12,13 @@
     * @param intervals - list of intervals
     * @param newInterval
     * @return insert - new list of intervals after original one been merged
-    * 
-    * connercase: list is empty=> add object in result
-    * 4 steps base on the iteration of i in list of intervals
-    * 1 find the new.start > iteration.end => add all the intervals ending before newInterval starts
+    *                  [new.s, new.e]
+    * [iter.s, iter e]       [iter.s,   iter e]
+    * connercase: list is empty=> add object in intervals list and return intervals
+    * i < intervals.size() in 3 while
+    * 1 while new.start > iteration.end => add all the intervals to result
     * 2 get the new end >= iteration.start => merge all overlapping intervals to one considering newInterval
-    * 3 add new interval into list  add the union of intervals
+    * 3 while add rest of intervals to list
     * 4 add rest of intervals
     * 
     **/
