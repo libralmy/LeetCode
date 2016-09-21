@@ -1,46 +1,57 @@
-/**S1: Iteration O(logn)
- * use statck to do the in order traversal left, root, right
- * curr is the pointer
- * pre =null pre< root
- * while(stack not empty and curr !=null)
- * curr != null => push to stack and curr = curr.left
- * else pop =>compare pre < pop =>pre = pop, curr = pop.right **/
- public class Solution {
-    
-    public static boolean isValidBST(TreeNode root) {
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode curr = root;
-        TreeNode pre = null;
-        while(!stack.isEmpty() || curr != null){
-            if(curr != null){
-                stack.push(curr);
-                curr = curr.left; //leftbound first
-            }else{
-                TreeNode temp = stack.pop();
-                //temp is the parent of pre
-                if(pre !=null && temp.val <= pre.val){
-                    return false;
-                }
-                pre = temp;
-                curr = temp.right;
-            }
-        }
 
-        return true;
+
+    /**
+    * @param root a given BST
+    * @return check is valid BST
+    * DfS: O(logn)
+    * dfs(root, Integer l, Integer r)
+    * if(l !=null && root.val <= l)return false
+    * return dfs(ro.l, l, ro.val) && dfs(ro.r, ro.val, r)
+    * 
+    * Iteration: O(n)
+    * BST: all left small than root, root small than right-> Inorder traversal
+    * set a preNode = null and currNode as pointer
+    * using stack as temp storage, top is the smallest
+    * push all left node to stack
+    * temp pop()  is the parent of preNode
+    * assign preNode = temp; curr = curr.right;
+    **/
+public class Solution {    
+   public boolean isValidBST(TreeNode root) {
+        return dfs(root, null, null);
+    }
+    
+    public boolean dfs(TreeNode root, Integer leftbound, Integer rightbound){
+        if(root == null) return true;
+        
+        if(leftbound != null && root.val <= leftbound){
+            return false;
+        }
+        if (rightbound != null && root.val >= rightbound){
+            return false;
+        }
+        return dfs(root.left, leftbound,root.val) && dfs(root.right, root.val, rightbound);
     }
     /*
     public boolean isValidBST(TreeNode root) {
-        return isValidBSTHelper(root, null, null);
-    }
-
-    private boolean isValidBSTHelper(TreeNode root, Integer leftBound, Integer rightBound) {
-        // recursively pass left and right bounds from higher level to lower level
-        if (root == null) {
-            return true;
+        TreeNode currNode = root;
+        TreeNode preNode = null;
+        Stack<TreeNode> stack = new Stack<>();
+        
+        while(currNode != null || !stack.isEmpty()){
+            while(currNode != null){
+                stack.push(currNode);
+                currNode = currNode.left;
+            }
+            TreeNode temp = stack.pop();
+            if(preNode != null && temp.val <= preNode.val){
+                return false;
+            }
+            preNode = temp;
+            currNode = temp.right;
         }
-        if (leftBound != null && root.val <= leftBound || rightBound != null && root.val >= rightBound) {
-            return false;
-        }
-        return isValidBSTHelper(root.left, leftBound, root.val) && isValidBSTHelper(root.right, root.val, rightBound);
+        return true;
     }*/
+    
+    
 }
