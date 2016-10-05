@@ -151,3 +151,74 @@ public class Table{
  }
  
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+public class Hashtable<K,V> {
+     
+    private Entry<K,V>[] table;
+    private int count;
+    private int threshold;
+    private int loadFactor;
+    private int modCount = 0;
+     
+    public synchronized V get(K key) {
+        Entry<K,V>[] t = table;
+        int hash = key.hashCode();
+        int index = (hash & 0x7FFFFFFF) % t.length;
+         
+        for (Entry<K,V> e = t[index]; e != null; e = e.next) {
+            if (e.key.equals(key))
+                return e.value;
+        }
+        return null;
+    }
+     
+    public synchronized V put(K key, V value) {
+        if (value == null)
+            throw new NullPointerException();
+         
+        Entry<K,V>[] t = table;
+        int hash = key.hashCode();
+        int index = (hash & 0x7FFFFFFF) % t.length;
+         
+        for (Entry<K,V> e = t[index]; e != null; e = e.next) {
+            if (e.key.equals(key)) {
+                V oldValue = e.value;
+                e.value = value;
+                return oldValue;
+            }
+        }
+         
+        modCount++;
+        if (count >= threshold) {
+            rehash();
+            t = table;
+            index = (hash & 0x7FFFFFFF) % t.length;
+        }
+         
+        Entry<K,V> e = new Entry<K,V>(key,value);
+        e.next = t[index];
+        t[index] = e;
+        count++;
+        return null;
+    }
+     
+    public void rehash() {
+        int oldCapacity = table.length;
+        Entry<K,V>[] oldTable = table;
+         
+        int newCapacity = oldCapacity * 2 + 1;
+        Entry<K,V>[] newTable = (Entry<K,V>[]) new Entry[newCapacity];
+         
+        modCount++;
+        threshold = (int) newCapacity * loadFactor;
+        table = newTable;
+         
+        for (int i = oldCapacity; i > 0; i--) {
+            for (Entry<K,V> old = oldTable[i]; old != null; old = old.next) {
+                int index = (old.key.hashCode() & 0x7FFFFFFF) % newCapacity;
+                old.next = newTable[index];
+                newTable[index] = old;
+            }
+        }
+    }
+}
