@@ -1,33 +1,13 @@
-/**
- * // This is the interface that allows for creating nested lists.
- * // You should not implement it, or speculate about its implementation
- * public interface NestedInteger {
- *
- *     // @return true if this NestedInteger holds a single integer, rather than a nested list.
- *     public boolean isInteger();
- *
- *     // @return the single integer that this NestedInteger holds, if it holds a single integer
- *     // Return null if this NestedInteger holds a nested list
- *     public Integer getInteger();
- *
- *     // @return the nested list that this NestedInteger holds, if it holds a nested list
- *     // Return null if this NestedInteger holds a single integer
- *     public List<NestedInteger> getList();
- * }
- */
+
 
     /**
     *@param nestedList a given list of NestedInteger
     *@return the weighted = depth * sum of each level
     * 
     * S1: BFS 
-    *     depth start at 1
-    *     while(make sure each level of nestedList will not be null)
-    *     build a temp List for storing each level of nestedlist
-    *     iterate the nestedList 
-    *     if it is integer, sum += depth * integer, OR temp list addAll
-    *     when finish the iteration of one level of list, depth++, 
-    *     assign the current level of list to next iteration
+    * peel the list layer by layer, if meet integer then sum += int * depth
+    * if meet list add into templist
+    * assign temp list back to nestedlist
     * S2: DFS
     *     depth start at 1
     *     int helper() iterate list
@@ -80,3 +60,20 @@ public class Solution {
 
     
 }
+/**
+ * // This is the interface that allows for creating nested lists.
+ * // You should not implement it, or speculate about its implementation
+ * public interface NestedInteger {
+ *
+ *     // @return true if this NestedInteger holds a single integer, rather than a nested list.
+ *     public boolean isInteger();
+ *
+ *     // @return the single integer that this NestedInteger holds, if it holds a single integer
+ *     // Return null if this NestedInteger holds a nested list
+ *     public Integer getInteger();
+ *
+ *     // @return the nested list that this NestedInteger holds, if it holds a nested list
+ *     // Return null if this NestedInteger holds a single integer
+ *     public List<NestedInteger> getList();
+ * }
+ */
