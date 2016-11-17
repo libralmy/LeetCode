@@ -11,7 +11,89 @@
      *                                              fit, movetohead() and update map
      *
      **/
+/**
+* Map<Key, value> as temp storage, doublelinkedlist to store the order of key been input
+**/
 
+public class LRUCache {
+    class DoubleLinkedList{
+        int value;
+        int key;
+        DoubleLinkedList prev;
+        DoubleLinkedList post;
+    }
+    
+    Map<Integer, DoubleLinkedList> map = new HashMap<>();
+    DoubleLinkedList head;
+    DoubleLinkedList tail;
+    int count =0;
+    int capacity;
+    
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        head = new DoubleLinkedList();
+        head.prev = null;
+        
+        tail = new DoubleLinkedList();
+        tail.post = null;
+        head.post = tail;
+        tail.prev = head;
+    }
+    
+    public void removeNode(DoubleLinkedList node){
+        DoubleLinkedList pre = node.prev;
+        DoubleLinkedList pos = node.post;
+        pre.post = pos;
+        pos.prev = pre;
+        
+    }
+    
+    public void addNode(DoubleLinkedList node){
+        node.prev = head;
+        node.post = head.post;
+        
+        head.post.prev = node;
+        head.post = node;
+        
+    }
+    
+    
+    public int get(int key) {
+        if(!map.containsKey(key)){
+            return -1;
+        }
+        DoubleLinkedList node = map.get(key);
+        removeNode(node);
+        addNode(node);
+        return node.value;
+    }
+    
+    public void set(int key, int value) {
+        
+        if(map.containsKey(key)){
+            DoubleLinkedList node = map.get(key);
+            node.value = value;
+            removeNode(node);
+            addNode(node);
+        }else{
+            
+            DoubleLinkedList newNode = new DoubleLinkedList();
+            newNode.key = key;
+            newNode.value = value;
+            
+            map.put(key, newNode);
+            addNode(newNode);
+            count++;
+            if(count > capacity){
+                DoubleLinkedList temp = tail.prev;
+                removeNode(temp);
+                map.remove(temp.key);
+                count--;
+            }
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 public class LRUCache {
     
         public LRUNode head = null, tail= null;
