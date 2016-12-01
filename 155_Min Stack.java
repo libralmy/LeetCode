@@ -67,32 +67,45 @@ public class MinStack {
     //注意：做任何操作前，都思考一下 stack / minStack 为空的状况
     /*****************ArrayList**********************/
     /*
-    List<Integer> stack = new ArrayList<Integer>();
-    List<Integer> minStack = new ArrayList<Integer>();    
+    public List<Integer> stack;
+    public List<Integer> min;
+    /** initialize your data structure here. */
+    public MinStack() {
+        stack = new ArrayList<>();
+        min = new ArrayList<>();
+    }
     
     public void push(int x) {
         stack.add(x);
-        if(minStack.isEmpty() || x <= minStack.get(minStack.size()-1)){
-            minStack.add(x);
+        if(min.isEmpty() || min.get(min.size()-1) >= x){
+            min.add(x);
         }
     }
-
+    
     public void pop() {
-        if(stack.isEmpty()) return;
-        int elem = stack.remove(stack.size()-1);
-        if(!minStack.isEmpty() && minStack.get(minStack.size()-1) == elem){
-            minStack.remove(minStack.size()-1);
+        if(!stack.isEmpty()){
+            int temp = stack.get(stack.size()-1);
+            stack.remove(stack.size()-1);
+            if(!min.isEmpty() && min.get(min.size()-1) == temp){
+                min.remove(min.size()-1);
+            }
+        }else{
+            return;
         }
     }
-
+    
     public int top() {
-        if(stack.isEmpty()) return 0;
-        return stack.get(stack.size()-1);
+        if(!stack.isEmpty()){
+            return stack.get(stack.size()-1);
+        }
+        return 0;
     }
-
+    
     public int getMin() {
-        if(minStack.isEmpty()) return 0;
-        return minStack.get(minStack.size()-1);
+        if(!min.isEmpty()){
+            return min.get(min.size()-1);
+        }
+        return 0;
     }
     */
     /**************************better solution two stacks***********************************/
