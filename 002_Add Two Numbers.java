@@ -39,9 +39,8 @@ public class Solution {
             pointer.next = new ListNode(remain);
             pointer = pointer.next;
             
-            p1 = (p1 == null ? null : p1.next);
-            p2 = (p2 == null ? null : p2.next);
-           
+            if(p1 != null){p1 = p1.next;}
+            if(p2 != null){p2 = p2.next;}
         }
         return dummyhead.next;
     }
