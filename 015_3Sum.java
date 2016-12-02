@@ -2,7 +2,7 @@
     /**
     * @param nums a given integer array
     * @return list<list> sum of three integers is 0
-    * 
+    * O(n^2)
     * conner case: if(nums == null || nums.length <= 2){return result;}
     * not get index, so sort() for using binary search
     * divide into one + two sum
@@ -23,29 +23,35 @@
 public class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
-        if(nums == null || nums.length <= 2){return result;}
-
+        if(nums == null){
+            return result;
+        }
         Arrays.sort(nums);
-        for(int i = 0; i < nums.length; i++){
-            if(i>0 && nums[i] == nums[i-1]){ continue;}
-            twoSumhelper(result, i+1, nums.length-1, nums, -nums[i]);
+        
+        for(int i = 0 ; i< nums.length; i++){
+            if(i > 0 && nums[i] == nums[i-1]){continue;}
+            
+            int target = -nums[i];
+            int start = i+1, end = nums.length-1;
+            
+            while(start < end){
+                int twoSum = nums[start] + nums[end];
+                if(twoSum < target){
+                    start++;
+                }else if(twoSum > target){
+                    end--;
+                }else{
+
+                    result.add(Arrays.asList(-target, nums[start], nums[end]));
+                    do{start++;}while(start < end && nums[start] == nums[start-1]);
+                    do{end--;}while(start < end && nums[end] == nums[end+1]);
+                }
+            }
         }
         
         return result;
+        
     }
     
-    public void twoSumhelper(List<List<Integer>> result, int start, int end, int[] nums, int target){
-        while(start < end){
-            int temp = nums[start] + nums[end];
-            if(temp < target){
-                start++;
-            }else if(temp > target){
-                end--;
-            }else{
-                result.add(Arrays.asList(-target, nums[start],nums[end]));
-                do{start++;}while(start < end && nums[start] == nums[start-1]);
-                do{end--;}while(start < end && nums[end] == nums[end+1]);
-            }
-        }
-    }
+    
 }
