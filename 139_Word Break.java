@@ -2,24 +2,26 @@
     /********set up a dp array boolean[s.length()+1] , check the dp[slow] == true, it is the break**********/
 /*****S1 leetcode => slow = fast -1 => last word c<-o<-d<-e****************/
 
-O(n/2) if break is in the middle and dict.word.length < s.length()
-public class Solution {
+    /**
+    * boolean[] for the break mark
+    * fast and slow pointer : s.substring(slow, fast)
+    * |fast -> outerloop slow = fast-1 and slow-- 
+    * record the previous break in fast
+    **/
     public boolean wordBreak(String s, Set<String> wordDict) {
-        
-        boolean[] dp = new boolean[s.length()+1];
-        dp[0] = true;
-
-        for(int fast = 1; fast <= s.length(); fast++){
-            for(int slow = fast-1; slow >= 0; slow--){// backward
-                if(dp[slow] && wordDict.contains(s.substring(j,fast))){
-                    dp[fast]=true;
+        if(s == null || s.length()== 0 || wordDict.isEmpty()){ return false;}
+        boolean[] mark = new boolean[s.length()+1];
+        mark[0] = true;
+        for(int fast = 0; fast <= s.length(); fast++){
+            for(int slow = fast-1; slow >= 0; slow--){
+                if(mark[slow] && wordDict.contains(s.substring(slow, fast))){
+                    mark[fast] = true;
                     break;
                 }
             }
         }
-
-        return dp[s.length()]; 
         
+        return mark[s.length()];
     }
      /*   O(n)
      public boolean wordBreak(String s, Set<String> wordDict) {
