@@ -13,19 +13,30 @@
      * for i*other increasing number
      * basically it is remove any 2*other, 3*other....n* other
     **/
-    public static int countPrimes(int n) {
+    public int countPrimes(int n) {
+        
+        if(n <= 1){ 
+            return 0;
+            
+        }
+        
         int count = 0;
-        boolean[] isPrime = new boolean[n];//smaller than , so doesnt need to =
-        for(int i = 2; i< n ; i++){
-            if(!isPrime[i]){
-                count++;
-                for(int j = 2; i*j <= n ; j++){
-                    isPrime[i*j] = true;
+        boolean[] notPrime = new boolean[n];
+        
+        for(int i = 2; i < Math.sqrt(n); i++){
+            if(!notPrime[i]){
+                for(int j = 2; j*i <n; j++){
+                    notPrime[i*j] = true;
                 }
             }
-
         }
-        return count;
+        
+        for(int i = 2; i < n; i++){
+            if(!notPrime[i]){count++;}
+        }
+        
+       return count;
+    }
 /*
         if(n < 2) return 0;
         if(n == 2) return 1;
