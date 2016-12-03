@@ -8,32 +8,22 @@
      * check has right node or not first, if not, then go check left node 
      * add treenode.value into list when depth == result.size()
      * */
-public class Solution {    
-    public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        if(root == null) return result;
-        
-        rightSideViewhelper(result, root, 0);
-        return result;
-    }
-    
-    public static void rightSideViewhelper(List<Integer> result, TreeNode root, int depth){
-        if(root == null){
-            return;
-        }
-        
-        if(depth == result.size()){
-            result.add(root.val);
-        }
-
-        rightSideViewhelper(result, root.right, depth+1);
-        rightSideViewhelper(result, root.left, depth+1);
-    }
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
     
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> result = new ArrayList<>();
-        if(root == null) return result;
-
+        
+        if(root == null){return result;}
+        
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
 
@@ -53,5 +43,26 @@ public class Solution {
             
         }
         return result;
+        
+    }
+    
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        
+        if(root == null){return result;}
+        helper(result, root, 0);
+        return result;
+        
+    }
+    
+    public void helper(List<Integer> result, TreeNode root, int depth){
+        if(root == null){return;}
+        
+        if(depth == result.size()){
+            result.add(root.val);
+        }
+        
+        if(root.right != null){helper(result, root.right, depth+1);}
+        if(root.left != null){helper(result, root.left, depth+1);}
     }
 }
