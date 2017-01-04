@@ -8,7 +8,14 @@
         return root;
     }
     
-
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null){return null;}
+        
+        while((root.val - p.val)*(root.val - q.val) > 0){
+            root = root.val > p.val? root.left : root.right;
+        }
+        return root;
+    }
     
     public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
