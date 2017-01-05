@@ -1,5 +1,7 @@
 
     /**
+    it need to start = i+1, or it will use the same number
+    [i] == [i-1] need to make sure i>0
     * @param nums a given integer array
     * @return list<list> sum of three integers is 0
     * O(n^2)
