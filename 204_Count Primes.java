@@ -6,37 +6,34 @@
      * according to flag, count++
      *
      *
-     * S2:
+    /**     * S2:
      * define a boolean array for get all products
      * 0, 1 are not prime, i start form 2 and smaller than n
-     * check isPrime[i] is reached or not, if not get in loop
-     * for i*other increasing number
+     * All loop start from 2. check isPrime[i] is reached or not, if not get in inner loop
      * basically it is remove any 2*other, 3*other....n* other
     **/
+
+
+public class Solution {
     public int countPrimes(int n) {
+        if(n <=1){return 0;}
         
-        if(n <= 1){ 
-            return 0;
-            
-        }
-        
+        boolean[] prime = new boolean[n];
         int count = 0;
-        boolean[] notPrime = new boolean[n];
-        
         for(int i = 2; i < Math.sqrt(n); i++){
-            if(!notPrime[i]){
-                for(int j = 2; j*i <n; j++){
-                    notPrime[i*j] = true;
+           if(!prime[i]){ 
+               for(int j = 2; j*i < n ; j++){
+                    prime[i*j] = true;
                 }
             }
         }
         
-        for(int i = 2; i < n; i++){
-            if(!notPrime[i]){count++;}
+        for(int k = 2; k < n ; k++){
+            if(!prime[k]){count++;}
         }
-        
-       return count;
+        return count;
     }
+}
 /*
         if(n < 2) return 0;
         if(n == 2) return 1;
