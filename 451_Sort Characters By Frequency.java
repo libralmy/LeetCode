@@ -1,42 +1,49 @@
+/**
+* class Freq char, count
+* Freq[256] 1 fill up new Freq(), 2 iterate counter, 3 Arrays.sort
+* output stringbuilder
+*/
+
 public class Solution {
-    class Entry{
+    public class Freq{
         char c;
-        int count; 
-        Entry(){
+        int count;
+        Freq(){
             this.count = 0;
         }
     }
     
-    
     public String frequencySort(String s) {
-        if(s == null){return s;}
+        if(s == null || s.length() == 0){ return s;}
         
-        Entry[] elem = new Entry[256];
-        
-        for(int i = 0; i < 256; i++){
-            elem[i] = new Entry();
+        Freq[] f = new Freq[256];
+        for(int i = 0 ; i < 256; i++){
+            f[i] = new Freq();
         }
         
         for(int i = 0; i < s.length(); i++){
-            elem[s.charAt(i)].c = s.charAt(i);
-            elem[s.charAt(i)].count++;
+            f[s.charAt(i)].c = s.charAt(i);
+            f[s.charAt(i)].count++;
+            
         }
         
-        Arrays.sort(elem, new Comparator<Entry>(){
+        Arrays.sort(f, new Comparator<Freq>(){
             @Override
-            public int compare(Entry e1, Entry e2){
-                return e2.count - e1.count;
+            public int compare(Freq f1, Freq f2){
+                return f2.count - f1.count;
             }
+            
         });
         StringBuilder sb = new StringBuilder();
-        for(Entry e: elem){
-            while(e.count > 0){
-                sb.append(e.c);
-                e.count--;
+        for(int i = 0; i < f.length; i++){
+            if(f[i].count != 0){
+                for(int k = f[i].count; k > 0; k--){
+                    sb.append(f[i].c);
+                }
+                
             }
         }
         
         return sb.toString();
-
     }
 }
