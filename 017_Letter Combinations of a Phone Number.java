@@ -57,22 +57,23 @@ public class Solution {
  *      ***i = 0, add first mapping, i = 1, add second mapping, after finish while loop, length of permutation will be digit.length(), i always smaller than that***
  *          pop the head as the first element of permutation
  *              add(head + C31) in string[convert by char] forloop **/
-    public static List<String> letterCombinations(String digits) {
-        List<String> result = new LinkedList<>();
-        if(digits.equals("")) return result;
-        String[] map = new String[]{ "0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
-        result.add("");//will pop same as queue loop
-
-        for(int i=0; i<digits.length(); i++){
-            int indexofmap = Character.getNumericValue(digits.charAt(i));//get index of mapping array
-            while(result.get(0).length() == i){
-                String temp = result.remove(0);//remove head
-                for(char elem : map[indexofmap].toCharArray()){
-                    result.add(temp + elem);
+public class Solution {
+    public List<String> letterCombinations(String digits) {
+        LinkedList<String> result = new LinkedList<>();
+        String[] mapping = new String[]{"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        if(digits == null || digits.length() == 0){return result;}
+        result.add("");
+        for(int i = 0; i < digits.length();  i++){
+            int x = Character.getNumericValue(digits.charAt(i));
+            
+            while(result.peek().length() == i){
+                String temp = result.remove();
+                for(char c : mapping[x].toCharArray()){
+                    result.add(temp+c);
                 }
             }
         }
+        
         return result;
     }
-    
 }
