@@ -12,7 +12,49 @@ if graph has edges then
     return error (graph has at least one cycle)
 else 
     return L (a topologically sorted order)
-    
+ /**
+*Topological sort
+* BFS - map[i]++ get all the post class [i][1]
+* queue.add(i in map[] == 0) 
+* iterate prev [r][0]== q.poll(), then get post
+* map[post]--, if map[post] ==0, then add post in queue as next prev, count++
+**/
+
+public class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        if(numCourses == 0 || prerequisites == null || prerequisites.length == 0){return true;}
+        
+        int[] map = new int[numCourses];
+        
+        for(int r = 0; r < prerequisites.length; r++){
+            map[prerequisites[r][1]]++;
+        }
+        
+        Queue<Integer> q = new LinkedList<>();
+        for(int i = 0; i < numCourses; i ++){
+            if(map[i] == 0){q.add(i);}
+        }
+        
+        int count = q.size();
+        while(!q.isEmpty()){
+            int prev = q.poll();
+            for(int r = 0; r < prerequisites.length; r++){
+                if(prev == prerequisites[r][0]){
+                    int post = prerequisites[r][1];
+                    map[post]--;
+                   
+                   if(map[post] == 0){
+                        q.add(post);
+                        count++;
+                   }
+                }
+            }
+        }
+        
+        return count == numCourses;
+        
+    }
+}   
     public class Solution {
     public boolean canFinish(int numCourses, int[][] prereq) {
         int[] visited = new int[numCourses];
