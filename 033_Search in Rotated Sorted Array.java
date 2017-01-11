@@ -3,7 +3,10 @@
     * @param nums a given int array
     * @param target a integer
     * @return the index of target
-    *
+    * if(nums[mid] < nums[start]){//right bound   if add = [3,1] will throw err
+    * 
+    * if(nums[mid] < target && nums[end] >= target) [start]= [end]=*
+    
     * while(left <= right) length == 1
     * mid = left +(right - left)/2 
     * [mid] == target return mid
