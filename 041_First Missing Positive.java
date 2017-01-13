@@ -13,6 +13,31 @@
     * else nums[0] == index? index+1: index;
     * 
     **/
+
+    public int firstMissingPositive(int[] nums) {
+        if(nums == null || nums.length == 0){return 1;}
+        
+        for (int i = 0; i < nums.length; i++) {
+            while(nums[i] > 0 && nums[i] <= nums.length && nums[nums[i]-1] != nums[i]){
+                swap(nums, nums[i]-1,i);
+            }
+        }
+        
+        for(int j = 0; j < nums.length; j++){
+            if(nums[j] != j+1){
+                return j+1;
+            }
+        }
+        
+        return nums.length+1;
+    }
+    
+    public void swap(int[] nums, int a, int b){
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
+    }
+
   public class Solution {
     public int firstMissingPositive(int[] nums) {
         if(nums == null || nums.length == 0) return 1;
