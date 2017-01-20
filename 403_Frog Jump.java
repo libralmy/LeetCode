@@ -13,6 +13,7 @@ public class Solution {
         if(index == stones.length -1) return true;
         
         for(int i = k-1; i <= k+1; i++){
+            //int binarySearch(int[] a, int fromIndex, int toIndex, int key)
             int position = Arrays.binarySearch(stones, index+1, stones.length, stones[index]+i);
             if(position > 0){
                 if(helper(position, stones, i)) return true;
