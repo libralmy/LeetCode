@@ -1,24 +1,25 @@
-
 /**
-* noZ present the index of non zero digit
-* noZ++ when num!=0
-* and then fill in 0 for rest of num
-**/
+* @parm nums: an array 
+* @void return: in place exchange
+* set a index for zero, if not zero, then move zero index to right
+* if array has zero, the iteration of nums[i] will reach end before zero index, so it needs to fill up rest of array
+* 
+***/
 public class Solution {
-    public static void moveZeroes(int[] nums) {
+    public void moveZeroes(int[] nums) {
         if(nums == null || nums.length == 0){return;}
-        int noZ = 0;
-        for(int num: nums){
-            if(num != 0){
-                nums[noZ++] = num; 
+        
+        int zeroIdx = 0;
+        for(int i = 0; i < nums.length; i++){
+            if(nums[i] != 0){
+                nums[zeroIdx] = nums[i];
+                zeroIdx++;
             }
         }
         
-        while(noZ < nums.length){
-            nums[noZ++] = 0;
+        while(zeroIdx < nums.length){
+            nums[zeroIdx++] = 0;
         }
-
+        
     }
-    
-    
 }
