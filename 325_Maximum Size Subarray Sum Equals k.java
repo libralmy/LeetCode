@@ -6,7 +6,7 @@
 * 2) (i-j] : 
 *    0_____i
 *    0__________j   
-*    k = sum[j] - sum[i] compare Max( (j-i), max)
+*    k = sum[j] - sum[i] compare to get Max( (j-i), max)
 **/
 
 public class Solution {
@@ -25,7 +25,7 @@ public class Solution {
                 counter = Math.max(counter, i - map.get(sum-k));
             }
             
-            if(!map.containsKey(sum)){map.put(sum, i);} //eg. 3 + 1 + -1
+            if(!map.containsKey(sum)){map.put(sum, i);} //exclusive if: eg. 3 + 1 + -1
         }
         
         return counter;
