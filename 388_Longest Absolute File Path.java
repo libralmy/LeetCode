@@ -1,6 +1,12 @@
-
-
-
+/**
+* @param input: a given string that having full path of file
+* @return the length of string that having the longest path
+* greedy
+* condition: "\n" - split each level, "\t" - count level, "." - find file
+* count each level of string that splited by \n and push it into stack
+* compare each level with the surface elem in the stack
+* if greater, pop and push the current len of elem into stack
+***/
 
 public class Solution {
     public static void main(String [ ] args){
