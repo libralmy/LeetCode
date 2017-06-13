@@ -3,6 +3,7 @@
 * @param k: a given int contains at most k distinct char
 * @output the length of longest substring that has kth distinct char
 * use hashmap<char, k> to maintain the size of window and record the longest path
+O(n^2)
 **/
 
 public class Solution {
