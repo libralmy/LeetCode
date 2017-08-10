@@ -1,3 +1,39 @@
+public class Solution {
+    /**
+     * @param n, m: positive integer (1 <= n ,m <= 100)
+     * @return an integer
+     * solution:
+     * 1) state: [n-1][m-1]
+     * 2) equation: f[n-1][m-1] = [n-2][m-1] + [n-1][m-2]
+     * 3) initial & conner case: f[0][0] = 1, f[0][c] = f[r][0] = 1
+     * 4) order of calculation: right, then down
+     */
+    public int uniquePaths(int m, int n) {
+        // write your code here 
+        int[][] f = new int[m][n];
+        
+        for(int r = 0; r < m; r++){
+            f[r][0] = 1;
+        }
+        
+        for(int c = 0; c < n; c++){
+            f[0][c] = 1;
+        }
+        
+        
+        for(int r = 1; r < m; r++){
+            for(int c = 1; c < n; c++){
+                f[r][c] = f[r-1][c] + f[r][c-1];
+            }
+        }
+        
+        return f[m-1][n-1];
+        
+    }
+}
+
+
+
 /**
 * boundery [][]=1
 * f[r][c] = f[r-1][c] + f[r][c-1]
