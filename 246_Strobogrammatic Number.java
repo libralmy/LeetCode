@@ -1,4 +1,31 @@
 public class Solution {
+     /**
+     * @param num a string
+     * @return true if a number is strobogrammatic or false
+     * map[num.charAt(i)] == num.charAt(s.length()-i-1)
+     */
+    public boolean isStrobogrammatic(String num) {
+        // Write your code here
+
+        int[] map = new int[256];
+        
+        map['0'] = '0';
+        map['1'] = '1';
+        map['8'] = '8';
+        map['6'] = '9';
+        map['9'] = '6';
+        
+        for(int i = 0; i < num.length(); i++){
+            int end = num.length() - 1 - i;
+            if(map[num.charAt(i)] != num.charAt(end)){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    
     public boolean isStrobogrammatic(String num) {
         if(num == null || num.length() == 0){return false;}
         
