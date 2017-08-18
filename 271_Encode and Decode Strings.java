@@ -1,3 +1,73 @@
+public class Solution {
+    /**
+     * @param strs a list of strings
+     * @return encodes a list of strings to a single string.
+     * use :; to split the string in the list
+     * use :: to stand for :
+     */
+    public String encode(List<String> strs) {
+        // Write your code here
+        
+        String result ="";
+        
+        for(String str : strs){
+            for(char ch : str.toCharArray()){
+                if(ch == ':'){
+                    result += "::";
+                }else{
+                    result += ch;
+                }
+            }
+            
+            result += ":;";
+        }
+        
+        
+        return result;
+        
+        
+    }
+
+    /**
+     * @param str a string
+     * @return dcodes a single string to a list of strings
+     * if meet : then look for [i+1] is : then it stands for itself
+     *                               is ; then it is the split signal
+     * else add to the list
+     */
+    public List<String> decode(String str) {
+        // Write your code here
+        List<String> result = new ArrayList<>();
+        char[] strArray = str.toCharArray();
+        int i = 0;
+        String temp = "";
+        while(i < str.length()){
+            
+            if(strArray[i] == ':'){
+                if(strArray[i+1] == ';'){
+                    result.add(temp);
+                    i += 2;
+                    temp = "";
+                }else if(strArray[i+1] == ':'){
+                    temp += ":";
+                    i += 2;
+                }
+            }else{
+                temp += strArray[i];
+                i += 1;
+                
+            }
+
+        }
+        
+        
+        return result;
+        
+        
+    }
+}
+
+
 public class Codec {
     /**
     * use the length of each string and a slash as the spliter
