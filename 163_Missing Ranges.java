@@ -1,3 +1,59 @@
+
+public class Solution {
+    /**
+     * @param nums a sorted integer array
+     * @param lower an integer
+     * @param upper an integer
+     * @return a list of its missing ranges
+     * 
+     * helper function(list, (long)low, (long)up) 
+     * main function three parts
+     * conner case nums[] == null
+     * 1 lower compare (long)num[0]-1
+     * 2 (long)num[i]+1 compare (long)num[i+1]-1
+     * 3 (long)num[len-1] compare upper
+     */
+    public List<String> findMissingRanges(int[] nums, int lower, int upper) {
+        // Write your code here
+        List<String> result = new ArrayList<>();
+        
+        
+        if(nums.length == 0){
+            getInterval(result, lower, upper);
+            return result;
+        }
+        
+        getInterval(result, lower, (long)nums[0]-1);
+        
+        for(int i = 1; i < nums.length; i++){
+            
+            getInterval(result, (long)nums[i-1]+1, (long)nums[i]-1);
+        }
+        
+        
+        getInterval(result, (long)nums[nums.length-1]+1, upper);
+        
+        return result;
+        
+    }
+    
+    
+    public void getInterval(List<String> result, long lower, long upper){
+        if(lower > upper){
+            return;
+        }
+
+
+        if(lower == upper){
+            result.add(lower +"");
+            return;
+        }
+        
+        result.add("" + lower +"->" + upper);
+
+    }
+}
+
 /**
 * @param nums a given int array that missing range
 * @param lower a given int lower bound
