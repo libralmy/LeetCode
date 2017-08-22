@@ -1,5 +1,31 @@
 
-    /**
+    /*
+     * @param A: An array of non-negative integers
+     * @return: The maximum amount of money you can rob tonight
+                no-rob,  rob  
+     f[i] = max{f[i-1], f[i-2] + A[i-1]}
+     f[0] = 0; f[1] = A[0]; 
+     */
+    public long houseRobber(int[] A) {
+        // write your code here
+        if(A == null || A.length == 0){ return 0;}
+        
+        
+        int n = A.length;
+        long[] f = new long[n+1];
+        f[0] = 0;
+        f[1] = A[0];
+        
+        for(int i = 2; i <= n; i++){
+            f[i] = Math.max(f[i-1], f[i-2]+A[i-1]);
+        }
+        
+        return f[n];
+        
+    } 
+
+
+/**
     * @param nums a given array that contains the money from each house
     * @return the max total that can be robbed
     * S1:
@@ -29,24 +55,5 @@ public class Solution {
         }
         return curr;
     }
-    /*
-    public int rob(int[] nums) {
-
-        if(nums.length == 0){
-            return 0;
-        }else if(nums.length == 1){
-            return nums[0];
-        }else if(nums.length == 2){
-            return Math.max(nums[0], nums[1]);
-        }
-        
-        int[] f = new int[nums.length +1];
-        f[0] = 0;
-        f[1] = nums[0];
-        for(int i = 2; i <= nums.length ; i++){
-            f[i] = Math.max(f[i-1], nums[i-1] + f[i-2]);
-        }
-        
-        return f[nums.length];
-    }*/
+   
 }
