@@ -1,49 +1,33 @@
 public class Solution {
-    /*
-     * @param : An array of Integer
-     * @return: an integer
-     */
-    public int longestIncreasingContinuousSubsequence(int[] A) {
-        // write your code here
-        /**
-        * continuous subsequence means increase and decrease 
-        * need to go over twice
-        * f[i] = max(1, f[i-1]+1(A[i-1] > A[i] && i >0)
-        **/
-        if(A == null  || A.length == 0){return 0;}
-        int increase = 0, decrease = 0;
-        int n = A.length;
-        increase = getLIS(A);
-        int i = 0, j = n-1;
-        while(i < j){
-            int temp = A[i];
-            A[i++] = A[j];
-            A[j--] = temp;
-        }
-        decrease = getLIS(A);
-        
-        return increase >= decrease? increase : decrease;
-        
-    }
-    
-    
-    public int getLIS(int[] A){
-        int result = Integer.MIN_VALUE;
-        int n = A.length;
-        int[] f = new int[n];
-        for(int i = 0 ; i < n ; i++){
-            f[i] = 1;
-            if(i > 0 && A[i-1] > A[i]){
-                f[i] = f[i-1] +1;
-            }
-            result = Math.max(result, f[i]);
-        }
-        
+    /**
+     * @param nums: The integer array
+     * @return: The length of LIS (longest increasing subsequence)
+     * a[j] ~ a[i]
 
-        return result;
+     * f[i] = max{f[i], f[j]+1 | j < i&& a[j]<a[i]}
+     * outside of j :max = Math.max(f[i], max);
+     */
+    public int longestIncreasingSubsequence(int[] nums) {
+        if(nums == null || nums.length == 0){return 0;}
+        int n = nums.length;
         
+        int max = 0;
+        int[] f = new int[n];
+        for(int i = 0 ; i < n; i++){
+            f[i] = 1;
+            for(int j = 0; j < i; j++){
+                if(nums[j] < nums[i]){
+                    f[i] = Math.max(f[i], f[j]+1);
+                } 
+            }
+            max = Math.max(f[i], max);
+        }
+        
+        return max;
     }
-};
+}
+
+
 public class Solution {
     /**
     * use a temp array to store the increasing value for nums
@@ -89,3 +73,53 @@ public class Solution {
         
     }
 }
+
+
+
+public class Solution {
+    /*
+     * @param : An array of Integer
+     * @return: an integer
+     */
+    public int longestIncreasingContinuousSubsequence(int[] A) {
+        // write your code here
+        /**
+        * continuous subsequence means increase and decrease 
+        * need to go over twice
+        * f[i] = max(1, f[i-1]+1(A[i-1] > A[i] && i >0)
+        **/
+        if(A == null  || A.length == 0){return 0;}
+        int increase = 0, decrease = 0;
+        int n = A.length;
+        increase = getLIS(A);
+        int i = 0, j = n-1;
+        while(i < j){
+            int temp = A[i];
+            A[i++] = A[j];
+            A[j--] = temp;
+        }
+        decrease = getLIS(A);
+        
+        return increase >= decrease? increase : decrease;
+        
+    }
+    
+    
+    public int getLIS(int[] A){
+        int result = Integer.MIN_VALUE;
+        int n = A.length;
+        int[] f = new int[n];
+        for(int i = 0 ; i < n ; i++){
+            f[i] = 1;
+            if(i > 0 && A[i-1] > A[i]){
+                f[i] = f[i-1] +1;
+            }
+            result = Math.max(result, f[i]);
+        }
+        
+
+        return result;
+        
+    }
+};
+
