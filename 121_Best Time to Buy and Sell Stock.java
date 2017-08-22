@@ -1,4 +1,29 @@
-   /**iterate in order
+  public class Solution {
+    /*
+     * @param prices: Given an integer array
+     * @return: Maximum profit
+     */
+    public int maxProfit(int[] prices) {
+        // write your code here
+        if(prices == null || prices.length == 0){return 0;}
+        
+        int profit = 0, min = Integer.MAX_VALUE;
+        int n = prices.length;
+        
+        for(int i = 0; i < n; i++){
+            min = Math.min(min, prices[i]);
+            profit = Math.max(profit, prices[i]- min);
+           
+            
+        }
+        
+        return profit;
+    }
+}
+  
+  
+  
+  /**iterate in order
      * bought keep the smallest num=> 
      * bought < prices[i]
      *      if profit < prices[] - bought => update profit
