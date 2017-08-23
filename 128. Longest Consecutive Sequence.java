@@ -1,5 +1,4 @@
 
-public class Solution {
     /**
     *S1
     * use hashset to maintain the num in the nums
@@ -14,7 +13,42 @@ public class Solution {
     * max record val - num(if non consecutive int, then max will 1)
     **/
 
-    
+    public class Solution {
+    /*
+     * @param num: A list of integers
+     * @return: An integer
+     use set to get all numbers
+     iterate num[] and use if(!set.contains(num-1)) get the smallest num
+     use while(set.remove(val)) val++
+     return (max, val-num)
+     */
+    public int longestConsecutive(int[] num) {
+        // write your code here
+        int max = 0;
+        Set<Integer> map = new HashSet<>();
+        
+        for(int n : num){
+            if(!map.contains(n)){
+                map.add(n);
+            }
+        }
+        
+        for(int n : num){
+            
+            //get the samllest
+            if(!map.contains(n-1)){
+                int temp = n;
+                while(map.remove(temp)){
+                    temp++;
+                }
+                
+                max = Math.max(max, temp-n);
+            }
+        }
+
+        return max;
+    }
+};
     public int longestConsecutive(int[] nums) {
         /*
         if(nums == null || nums.length == 0){
@@ -54,4 +88,4 @@ public class Solution {
       return max;
 
     }
-}
+
